@@ -1,0 +1,48 @@
+import { Activity } from '../types/activity';
+
+export const activities: Activity[] = [
+  {
+    id: '1',
+    place: 'Kampus UMM',
+    category: 'Kuliah',
+    icon: '🎓',
+    startTime: '08:00',
+    endTime: '10:00',
+    duration: '2 jam',
+    date: '2026-10-07',
+    note: 'Perkuliahan pagi',
+  },
+  {
+    id: '2',
+    place: 'Perpustakaan',
+    category: 'Belajar',
+    icon: '📚',
+    startTime: '10:30',
+    endTime: '12:00',
+    duration: '1 jam 30 menit',
+    date: '2026-10-07',
+    note: 'Mengerjakan tugas',
+  },
+  {
+    id: '3',
+    place: 'Kafe',
+    category: 'Santai',
+    icon: '☕',
+    startTime: '13:00',
+    endTime: '14:30',
+    duration: '1 jam 30 menit',
+    date: '2026-10-07',
+    note: 'Istirahat dan mengerjakan tugas',
+  },
+  {
+    id: '4',
+    place: 'Lapangan UMM',
+    category: 'Olahraga',
+    icon: '🏃',
+    startTime: '16:00',
+    endTime: '17:00',
+    duration: '1 jam',
+    date: '2026-10-07',
+    note: 'Jalan santai sore',
+  },
+];
