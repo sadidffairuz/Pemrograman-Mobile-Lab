@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Travel Journal - Daily Log</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#000000",
+            "on-secondary": "#ffffff",
+            "on-surface-variant": "#45464d",
+            "on-surface": "#191c1e",
+            "surface-container-high": "#e6e8ea",
+            "on-secondary-fixed-variant": "#004395",
+            "on-secondary-container": "#fefcff",
+            "on-secondary-fixed": "#001a42",
+            "inverse-primary": "#bec6e0",
+            "primary-fixed-dim": "#bec6e0",
+            "primary-container": "#131b2e",
+            "surface-container": "#eceef0",
+            "outline": "#76777d",
+            "secondary-container": "#2170e4",
+            "surface-dim": "#d8dadc",
+            "primary-fixed": "#dae2fd",
+            "outline-variant": "#c6c6cd",
+            "on-tertiary-fixed-variant": "#38485d",
+            "on-primary-container": "#7c839b",
+            "surface": "#f7f9fb",
+            "on-background": "#191c1e",
+            "secondary-fixed-dim": "#adc6ff",
+            "surface-variant": "#e0e3e5",
+            "secondary": "#0058be",
+            "surface-container-highest": "#e0e3e5",
+            "on-error-container": "#93000a",
+            "tertiary-fixed": "#d3e4fe",
+            "inverse-on-surface": "#eff1f3",
+            "surface-bright": "#f7f9fb",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "on-primary-fixed": "#131b2e",
+            "surface-tint": "#565e74",
+            "tertiary-container": "#0b1c30",
+            "inverse-surface": "#2d3133",
+            "on-error": "#ffffff",
+            "on-tertiary-container": "#75859d",
+            "error": "#ba1a1a",
+            "on-tertiary": "#ffffff",
+            "on-primary": "#ffffff",
+            "on-tertiary-fixed": "#0b1c30",
+            "on-primary-fixed-variant": "#3f465c",
+            "secondary-fixed": "#d8e2ff",
+            "background": "#f7f9fb",
+            "primary": "#000000",
+            "surface-container-low": "#f2f4f6",
+            "error-container": "#ffdad6",
+            "surface-container-lowest": "#ffffff"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-sm": "0.75rem",
+            "space-xl": "2rem",
+            "space-md": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-lg": "1.5rem",
+            "margin": "1rem",
+            "space-2xl": "3rem",
+            "space-xs": "0.5rem",
+            "gutter": "1rem",
+            "margin-tablet": "2rem",
+            "space-2xs": "0.25rem",
+            "margin-desktop": "4rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "display-hero-mobile": ["Inter"],
+            "headline-lg": ["Inter"],
+            "meta-mono": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-lg-mobile": ["Inter"],
+            "display-hero": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "body-md": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-sm": ["Inter"]
+          },
+          "fontSize": {
+            "body-sm": ["13px", {"lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400"}],
+            "display-hero-mobile": ["32px", {"lineHeight": "38px", "letterSpacing": "-0.025em", "fontWeight": "600"}],
+            "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "meta-mono": ["11px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "500"}],
+            "headline-lg-mobile": ["24px", {"lineHeight": "30px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "display-hero": ["44px", {"lineHeight": "52px", "letterSpacing": "-0.03em", "fontWeight": "600"}],
+            "label-sm": ["11px", {"lineHeight": "16px", "letterSpacing": "0.04em", "fontWeight": "600"}],
+            "label-md": ["13px", {"lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "500"}],
+            "body-md": ["15px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "400"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "400"}],
+            "headline-sm": ["16px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased flex justify-center min-h-screen">
+<!-- Mobile App Frame Container (390px portrait standard) -->
+<div class="w-full max-w-[390px] min-h-screen bg-background relative flex flex-col pb-24 shadow-sm">
+<!-- TopAppBar Component (from Shared Components JSON & Specifications) -->
+<header class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] z-50 flex justify-between items-center px-gutter h-14 bg-surface-container-lowest">
+<div class="flex items-center gap-space-xs">
+<button aria-label="Current Location" class="w-9 h-9 flex items-center justify-center rounded-xl bg-surface-container-lowest text-primary active:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]" data-icon="near_me">near_me</span>
+</button>
+<div class="flex flex-col">
+<h1 class="text-headline-sm font-headline-sm font-semibold text-on-surface tracking-tight">Thursday, Oct 24</h1>
+</div>
+</div>
+<button aria-label="Filters" class="w-9 h-9 flex items-center justify-center rounded-xl bg-surface-container-lowest text-on-surface active:opacity-90 transition-opacity hover:text-primary">
+<span class="material-symbols-outlined text-[20px]" data-icon="tune">tune</span>
+</button>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 px-margin pt-16">
+<!-- Sub-header Meta Status Strip -->
+<section class="mt-space-sm mb-space-lg flex items-center justify-between py-space-xs px-space-sm bg-surface-container-lowest rounded-xl border border-outline-variant">
+<div class="flex items-center gap-2">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+</span>
+<span class="text-meta-mono font-meta-mono text-on-surface-variant font-medium">GPS ACTIVE · 4 STOPS LOGGED</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-meta-mono font-meta-mono text-primary font-semibold">6.2 km</span>
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">total</span>
+</div>
+</section>
+<!-- Vertical Daily Timeline Feed -->
+<div class="relative">
+<!-- The Continuous Timeline Vertical Axis Line -->
+<div class="absolute left-[15px] top-4 bottom-8 w-[1.5px] bg-outline-variant z-0"></div>
+<!-- Stop 1 (08:30 AM) -->
+<article class="relative pl-10 pb-space-lg group">
+<!-- Timeline Node Marker -->
+<div class="absolute left-[10px] top-1.5 w-3 h-3 rounded-full bg-surface-container-lowest border-2 border-primary z-10 flex items-center justify-center">
+<div class="w-1 h-1 rounded-full bg-primary"></div>
+</div>
+<!-- Entry Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-none hover:border-outline transition-colors duration-150">
+<!-- Header: Time, Duration & Category Chip -->
+<div class="flex items-center justify-between mb-space-2xs">
+<div class="flex items-center gap-2">
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">08:30 AM</span>
+<span class="text-meta-mono font-meta-mono text-outline">·</span>
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">45m</span>
+</div>
+<span class="px-space-xs py-[2px] rounded-full bg-surface-container-lowest border border-outline-variant text-label-sm font-label-sm text-on-surface">Cafe</span>
+</div>
+<!-- Content Title & Excerpt -->
+<h2 class="text-headline-sm font-headline-sm text-on-surface mt-1">Blue Bottle Coffee</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Morning pour-over &amp; notebook prep</p>
+<!-- Vector Map Snippet Card -->
+<div class="mt-space-sm h-28 w-full rounded-xl overflow-hidden relative bg-surface-container-low border border-outline-variant" data-location="Tokyo Shibuya" style="">
+<svg class="w-full h-full object-cover" fill="none" viewbox="0 0 320 112" xmlns="http://www.w3.org/2000/svg">
+<!-- Background & park geometries -->
+<rect fill="#F2F4F6" height="112" width="320"></rect>
+<path d="M-10 20 C40 30, 80 10, 130 35 L120 90 L-10 85 Z" fill="#E6E8EA" opacity="0.8"></path>
+<path d="M220 -10 L330 30 L310 90 L240 70 Z" fill="#E6E8EA" opacity="0.6"></path>
+<!-- Water subtle accent -->
+<path d="M140 112 C160 85, 175 70, 195 50 C210 35, 230 20, 260 0 L280 0 C250 25, 225 45, 205 65 C185 85, 170 95, 155 112 Z" fill="#D8DADC" opacity="0.9"></path>
+<!-- Vector Grid / Streets -->
+<line stroke="#FFFFFF" stroke-width="5" x1="0" x2="320" y1="42" y2="42"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="0" x2="320" y1="42" y2="42"></line>
+<line stroke="#FFFFFF" stroke-width="5" x1="90" x2="90" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="90" x2="90" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="190" x2="190" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="190" x2="190" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="3" x1="0" x2="320" y1="88" y2="88"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="0" x2="320" y1="88" y2="88"></line>
+<line stroke="#FFFFFF" stroke-width="3" x1="0" x2="320" y1="10" y2="95"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="0" x2="320" y1="10" y2="95"></line>
+<!-- Precise Pinpoint Marker -->
+<g transform="translate(190, 42)">
+<circle cx="0" cy="0" fill="#000000" fill-opacity="0.08" r="10"></circle>
+<circle cx="0" cy="0" fill="#000000" r="4.5"></circle>
+<circle cx="0" cy="0" fill="#FFFFFF" r="2"></circle>
+</g>
+</svg>
+<!-- Micro Coordinates Tag -->
+<div class="absolute bottom-2 left-2 px-space-xs py-[2px] bg-surface-container-lowest/90 backdrop-blur-sm rounded border border-outline-variant text-[10px] font-meta-mono text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>35.6628° N, 139.7000° E</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stop 2 (09:45 AM) -->
+<article class="relative pl-10 pb-space-lg group">
+<!-- Timeline Node Marker -->
+<div class="absolute left-[10px] top-1.5 w-3 h-3 rounded-full bg-surface-container-lowest border-2 border-primary z-10 flex items-center justify-center">
+<div class="w-1 h-1 rounded-full bg-primary"></div>
+</div>
+<!-- Entry Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-none hover:border-outline transition-colors duration-150">
+<!-- Header: Time, Duration & Category Chip -->
+<div class="flex items-center justify-between mb-space-2xs">
+<div class="flex items-center gap-2">
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">09:45 AM</span>
+<span class="text-meta-mono font-meta-mono text-outline">·</span>
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">3h 15m</span>
+</div>
+<span class="px-space-xs py-[2px] rounded-full bg-surface-container-lowest border border-outline-variant text-label-sm font-label-sm text-on-surface">Campus</span>
+</div>
+<!-- Content Title & Excerpt -->
+<h2 class="text-headline-sm font-headline-sm text-on-surface mt-1">Central Science Library &amp; Campus</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Research session &amp; bibliography review</p>
+<!-- Vector Map Snippet Card -->
+<div class="mt-space-sm h-28 w-full rounded-xl overflow-hidden relative bg-surface-container-low border border-outline-variant" data-location="Tokyo University Hongo" style="">
+<svg class="w-full h-full object-cover" fill="none" viewbox="0 0 320 112" xmlns="http://www.w3.org/2000/svg">
+<!-- Background -->
+<rect fill="#F2F4F6" height="112" width="320"></rect>
+<!-- Campus courtyard quad -->
+<rect fill="#E6E8EA" height="60" opacity="0.8" rx="3" width="70" x="70" y="24"></rect>
+<rect fill="#E6E8EA" height="50" opacity="0.6" rx="3" width="90" x="160" y="35"></rect>
+<!-- Street Grid Lines -->
+<line stroke="#FFFFFF" stroke-width="4" x1="0" x2="320" y1="24" y2="24"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="0" x2="320" y1="24" y2="24"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="0" x2="320" y1="84" y2="84"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="0" x2="320" y1="84" y2="84"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="55" x2="55" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="55" x2="55" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="5" x1="145" x2="145" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="145" x2="145" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="260" x2="260" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="260" x2="260" y1="0" y2="112"></line>
+<!-- Precise Pinpoint Marker -->
+<g transform="translate(105, 54)">
+<circle cx="0" cy="0" fill="#000000" fill-opacity="0.08" r="10"></circle>
+<circle cx="0" cy="0" fill="#000000" r="4.5"></circle>
+<circle cx="0" cy="0" fill="#FFFFFF" r="2"></circle>
+</g>
+</svg>
+<!-- Micro Coordinates Tag -->
+<div class="absolute bottom-2 left-2 px-space-xs py-[2px] bg-surface-container-lowest/90 backdrop-blur-sm rounded border border-outline-variant text-[10px] font-meta-mono text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>35.7126° N, 139.7620° E</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stop 3 (01:15 PM) -->
+<article class="relative pl-10 pb-space-lg group">
+<!-- Timeline Node Marker -->
+<div class="absolute left-[10px] top-1.5 w-3 h-3 rounded-full bg-surface-container-lowest border-2 border-primary z-10 flex items-center justify-center">
+<div class="w-1 h-1 rounded-full bg-primary"></div>
+</div>
+<!-- Entry Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-space-md shadow-none hover:border-outline transition-colors duration-150">
+<!-- Header: Time, Duration & Category Chip -->
+<div class="flex items-center justify-between mb-space-2xs">
+<div class="flex items-center gap-2">
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">01:15 PM</span>
+<span class="text-meta-mono font-meta-mono text-outline">·</span>
+<span class="text-meta-mono font-meta-mono text-on-surface-variant">50m</span>
+</div>
+<span class="px-space-xs py-[2px] rounded-full bg-surface-container-lowest border border-outline-variant text-label-sm font-label-sm text-on-surface">Bakery</span>
+</div>
+<!-- Content Title & Excerpt -->
+<h2 class="text-headline-sm font-headline-sm text-on-surface mt-1">Kitsune Bakery &amp; Garden</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Matcha croissant with Alex</p>
+<!-- Vector Map Snippet Card -->
+<div class="mt-space-sm h-28 w-full rounded-xl overflow-hidden relative bg-surface-container-low border border-outline-variant" data-location="Tokyo Aoyama" style="">
+<svg class="w-full h-full object-cover" fill="none" viewbox="0 0 320 112" xmlns="http://www.w3.org/2000/svg">
+<!-- Background -->
+<rect fill="#F2F4F6" height="112" width="320"></rect>
+<!-- Garden Geometry -->
+<path d="M120 10 C180 5, 230 25, 240 85 C200 95, 140 80, 110 65 Z" fill="#E6E8EA" opacity="0.8"></path>
+<!-- Street Grid Lines -->
+<line stroke="#FFFFFF" stroke-width="5" x1="0" x2="320" y1="56" y2="56"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="0" x2="320" y1="56" y2="56"></line>
+<line stroke="#FFFFFF" stroke-width="3" x1="80" x2="80" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="80" x2="80" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="3" x1="220" x2="220" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="220" x2="220" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="3" x1="30" x2="160" y1="112" y2="0"></line>
+<line stroke="#CBD5E1" stroke-width="1" x1="30" x2="160" y1="112" y2="0"></line>
+<!-- Precise Pinpoint Marker -->
+<g transform="translate(160, 56)">
+<circle cx="0" cy="0" fill="#000000" fill-opacity="0.08" r="10"></circle>
+<circle cx="0" cy="0" fill="#000000" r="4.5"></circle>
+<circle cx="0" cy="0" fill="#FFFFFF" r="2"></circle>
+</g>
+</svg>
+<!-- Micro Coordinates Tag -->
+<div class="absolute bottom-2 left-2 px-space-xs py-[2px] bg-surface-container-lowest/90 backdrop-blur-sm rounded border border-outline-variant text-[10px] font-meta-mono text-on-surface-variant flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>35.6652° N, 139.7123° E</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stop 4 (02:40 PM) - Active / Latest Location Node -->
+<article class="relative pl-10 pb-6 group">
+<!-- Active Timeline Node Marker with accent dot -->
+<div class="absolute left-[10px] top-1.5 w-3 h-3 rounded-full bg-surface-container-lowest border-2 border-primary z-10 flex items-center justify-center ring-4 ring-primary-fixed/50">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary"></div>
+</div>
+<!-- Entry Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline p-space-md shadow-none hover:border-primary transition-colors duration-150">
+<!-- Header: Time, Duration & Category Chip -->
+<div class="flex items-center justify-between mb-space-2xs">
+<div class="flex items-center gap-2">
+<span class="text-meta-mono font-meta-mono text-primary font-semibold">02:40 PM</span>
+<span class="text-meta-mono font-meta-mono text-outline">·</span>
+<span class="text-meta-mono font-meta-mono text-primary font-medium">1h 30m</span>
+</div>
+<span class="px-space-xs py-[2px] rounded-full bg-primary text-label-sm font-label-sm text-on-primary">Culture</span>
+</div>
+<!-- Content Title & Excerpt -->
+<h2 class="text-headline-sm font-headline-sm text-on-surface mt-1">Mori Art Museum &amp; Lookout</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Contemporary sculpture exhibit</p>
+<!-- Vector Map Snippet Card -->
+<div class="mt-space-sm h-28 w-full rounded-xl overflow-hidden relative bg-surface-container-low border border-outline-variant" data-location="Tokyo Roppongi Hills" style="">
+<svg class="w-full h-full object-cover" fill="none" viewbox="0 0 320 112" xmlns="http://www.w3.org/2000/svg">
+<!-- Background -->
+<rect fill="#F2F4F6" height="112" width="320"></rect>
+<!-- Complex urban geometry blocks -->
+<path d="M100 20 L180 10 L195 80 L110 75 Z" fill="#E6E8EA" opacity="0.9"></path>
+<path d="M210 15 L280 20 L275 65 L215 60 Z" fill="#E6E8EA" opacity="0.5"></path>
+<!-- Street Grid Lines (Major Avenues) -->
+<line stroke="#FFFFFF" stroke-width="5" x1="0" x2="320" y1="36" y2="36"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="0" x2="320" y1="36" y2="36"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="0" x2="320" y1="78" y2="78"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="0" x2="320" y1="78" y2="78"></line>
+<line stroke="#FFFFFF" stroke-width="4" x1="140" x2="140" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.2" x1="140" x2="140" y1="0" y2="112"></line>
+<line stroke="#FFFFFF" stroke-width="5" x1="205" x2="205" y1="0" y2="112"></line>
+<line stroke="#CBD5E1" stroke-width="1.5" x1="205" x2="205" y1="0" y2="112"></line>
+<!-- Active Pinpoint Marker with Accent Ring -->
+<g transform="translate(150, 48)">
+<circle cx="0" cy="0" fill="#0058BE" fill-opacity="0.12" r="14"></circle>
+<circle cx="0" cy="0" fill="#0058BE" r="6"></circle>
+<circle cx="0" cy="0" fill="#FFFFFF" r="2.5"></circle>
+</g>
+</svg>
+<!-- Micro Coordinates Tag with Pulse -->
+<div class="absolute bottom-2 left-2 px-space-xs py-[2px] bg-surface-container-lowest/95 backdrop-blur-sm rounded border border-outline-variant text-[10px] font-meta-mono text-on-surface flex items-center gap-1.5 font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span>35.6605° N, 139.7292° E</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</main>
+<!-- Floating Action Button: Log Location (Anchored above bottom navigation) -->
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 w-full max-w-[390px] px-margin flex justify-center pointer-events-none">
+<button class="pointer-events-auto flex items-center justify-center gap-2 h-11 px-5 rounded-full bg-primary text-on-primary text-label-md font-label-md shadow-[0px_8px_20px_rgba(15,23,42,0.18)] active:opacity-90 active:scale-[0.98] transition-all duration-150 border border-primary">
+<span class="material-symbols-outlined text-[18px]" data-icon="add_location_alt">add_location_alt</span>
+<span class="font-medium">Log Location</span>
+</button>
+</div>
+<!-- BottomNavBar Component (from Shared Components JSON & Specifications) -->
+<nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[390px] z-50 flex justify-around items-center px-gutter py-space-xs bg-surface-container-lowest">
+<!-- Tab 1: Today (Active State based on Semantic Mapping: Current Feed Screen) -->
+<a aria-current="page" class="flex flex-col items-center justify-center text-primary font-semibold transition-colors duration-150 py-1" href="#today">
+<span class="material-symbols-outlined text-[22px]" data-icon="edit_calendar" data-weight="fill" style="font-variation-settings: 'FILL' 1;">edit_calendar</span>
+<span class="text-label-sm font-label-sm mt-0.5">Today</span>
+</a>
+<!-- Tab 2: History (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-normal hover:text-primary transition-colors duration-150 py-1" href="#history">
+<span class="material-symbols-outlined text-[22px]" data-icon="history">history</span>
+<span class="text-label-sm font-label-sm mt-0.5">History</span>
+</a>
+<!-- Tab 3: Settings (Inactive) -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant font-normal hover:text-primary transition-colors duration-150 py-1" href="#settings">
+<span class="material-symbols-outlined text-[22px]" data-icon="settings">settings</span>
+<span class="text-label-sm font-label-sm mt-0.5">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>
