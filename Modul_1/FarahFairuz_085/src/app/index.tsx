@@ -118,7 +118,7 @@ export default function HomeScreen() {
           <View
             style={{
               backgroundColor: colors.primary,
-              borderRadius: 25,
+              borderRadius: 0,
               padding: 20,
               marginBottom: 24,
             }}
@@ -159,7 +159,7 @@ export default function HomeScreen() {
           <View
             style={{
               flexDirection: isWideScreen ? 'row' : 'row',
-              gap: 10,
+              gap: 50,
             }}
           >
             <StatCard
