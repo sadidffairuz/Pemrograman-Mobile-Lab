@@ -20,7 +20,7 @@ export default function ActivityCard({
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [
+      style={({ pressed }: { pressed: boolean }) => [
         styles.card,
         pressed && styles.pressed,
       ]}

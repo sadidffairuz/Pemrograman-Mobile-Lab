@@ -42,7 +42,7 @@ export default function BottomNav() {
             <Pressable
               key={item.route}
               onPress={() => router.push(item.route)}
-              style={({ pressed }) => [
+              style={({ pressed }: { pressed: boolean }) => [
                 styles.item,
                 pressed && styles.pressed,
               ]}
