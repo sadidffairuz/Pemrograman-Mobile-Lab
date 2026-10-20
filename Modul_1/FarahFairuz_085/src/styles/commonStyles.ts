@@ -59,6 +59,28 @@ export const commonStyles = StyleSheet.create({
     borderColor: '#ECEEF5',
   },
 
+  input: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    fontSize: 15,
+    color: '#1F2430',
+    borderWidth: 1,
+    borderColor: '#ECEEF5',
+  },
+
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 10,
+    elevation: 3,
+  },
+
   button: {
     borderRadius: 16,
     overflow: 'hidden',

@@ -16,6 +16,7 @@ import StatCard from '../components/StatCard';
 import { activities } from '../data/activities';
 import { colors } from '../constants/colors';
 import { commonStyles } from '../styles/commonStyles';
+import { LocationIcon, ActivityIcon, TimerIcon } from '../asset';
 
 const getGreeting = (): string => {
   const hour = new Date().getHours();
@@ -80,7 +81,7 @@ export default function HomeScreen() {
                 </Text>
 
                 <Text style={commonStyles.title}>
-                  {greeting} 👋
+                  {greeting}
                 </Text>
 
                 <Text style={commonStyles.subtitle}>
@@ -140,7 +141,7 @@ export default function HomeScreen() {
                 marginTop: 5,
               }}
             >
-              {activityCount} aktivitas terekam ✨
+              {activityCount} aktivitas terekam
             </Text>
 
             <Text
@@ -162,19 +163,19 @@ export default function HomeScreen() {
             }}
           >
             <StatCard
-              icon="📍"
+              icon={<LocationIcon size={20} color={colors.primary} />}
               value="5"
               label="tempat"
             />
 
             <StatCard
-              icon="🚶"
+              icon={<ActivityIcon size={20} color={colors.primary} />}
               value={`${activityCount}`}
               label="aktivitas"
             />
 
             <StatCard
-              icon="⏱️"
+              icon={<TimerIcon size={20} color={colors.primary} />}
               value="7j 20m"
               label="di luar"
             />
