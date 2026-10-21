@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BottomNav from '../components/BottomNav';
@@ -27,7 +27,7 @@ export default function HomeScreen() {
               <View style={styles.brandIcon}><Ionicons name="map" size={21} color={colors.white} /></View>
               <Text style={styles.brand}>jejakku<Text style={styles.brandDot}>.</Text></Text>
             </View>
-            <Pressable accessibilityLabel="Buka profil" onPress={() => router.push('/search')} style={styles.avatar}>
+            <Pressable accessibilityLabel="Buka profil" onPress={() => router.push('/profile')} style={styles.avatar}>
               <Ionicons name="person-outline" size={21} color={colors.primary} />
             </Pressable>
           </View>
@@ -77,11 +77,11 @@ export default function HomeScreen() {
               <View style={[styles.road, styles.roadThree]} />
               <View style={[styles.park, styles.parkOne]} />
               <View style={[styles.park, styles.parkTwo]} />
-              <View style={[styles.water, styles.waterOne]} />
+              <View style={styles.water} />
               <View style={[styles.mapPin, { left: '27%', top: '30%' }]}><Ionicons name="location" size={19} color={colors.white} /></View>
               <View style={[styles.mapPin, styles.mapPinAlt, { left: '62%', top: '51%' }]}><Ionicons name="location" size={18} color={colors.white} /></View>
               <View style={styles.mapLabel}><Ionicons name="map-outline" size={14} color={colors.primary} /><Text style={styles.mapLabelText}>Peta perjalanan</Text></View>
-              <View style={styles.mapHint}><Text style={styles.mapHintText}>Lihat semua lokasi</Text><Ionicons name="arrow-up-right" size={15} color={colors.primary} /></View>
+              <View style={styles.mapHint}><Text style={styles.mapHintText}>Lihat semua lokasi</Text><Feather name="arrow-up-right" size={15} color={colors.primary} /></View>
             </View>
           </Pressable>
 
@@ -117,7 +117,7 @@ export default function HomeScreen() {
               <Text style={styles.addTitle}>Simpan jejak baru</Text>
               <Text style={styles.addSubtitle}>Catat tempat, foto, dan ceritamu</Text>
             </View>
-            <Ionicons name="arrow-up-right" size={20} color={colors.primary} />
+            <Feather name="arrow-up-right" size={20} color={colors.primary} />
           </Pressable>
           <Text style={styles.footerNote}>Dibuat dari perjalananmu, disimpan untuk dikenang. ✦</Text>
         </View>
