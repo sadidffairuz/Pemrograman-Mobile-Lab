@@ -81,11 +81,7 @@ export default function HomeScreen() {
               <View style={[styles.mapPin, { left: '27%', top: '30%' }]}><Ionicons name="location" size={19} color={colors.white} /></View>
               <View style={[styles.mapPin, styles.mapPinAlt, { left: '62%', top: '51%' }]}><Ionicons name="location" size={18} color={colors.white} /></View>
               <View style={styles.mapLabel}><Ionicons name="map-outline" size={14} color={colors.primary} /><Text style={styles.mapLabelText}>Peta perjalanan</Text></View>
-<<<<<<< HEAD
-              <View style={styles.mapHint}><Text style={styles.mapHintText}>Lihat semua lokasi</Text><Ionicons name="arrow-forward" size={15} color={colors.primary} /></View>
-=======
               <View style={styles.mapHint}><Text style={styles.mapHintText}>Lihat semua lokasi</Text><Feather name="arrow-up-right" size={15} color={colors.primary} /></View>
->>>>>>> 78d5c7152e64b889810b4bcb5e3e90d3c9fe8486
             </View>
           </Pressable>
 
@@ -121,11 +117,7 @@ export default function HomeScreen() {
               <Text style={styles.addTitle}>Simpan jejak baru</Text>
               <Text style={styles.addSubtitle}>Catat tempat, foto, dan ceritamu</Text>
             </View>
-<<<<<<< HEAD
-            <Ionicons name="arrow-forward" size={20} color={colors.primary} />
-=======
             <Feather name="arrow-up-right" size={20} color={colors.primary} />
->>>>>>> 78d5c7152e64b889810b4bcb5e3e90d3c9fe8486
           </Pressable>
           <Text style={styles.footerNote}>Dibuat dari perjalananmu, disimpan untuk dikenang. ✦</Text>
         </View>
