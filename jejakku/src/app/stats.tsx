@@ -47,18 +47,19 @@ export default function StatsScreen() {
         contentContainerStyle={commonStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={commonStyles.container}>
-          <Text style={commonStyles.title}>
+        <View style={commonStyles.container} role="main">
+          <Text style={commonStyles.title} role="heading" aria-level={1}>
             Statistik
           </Text>
 
-          <Text style={commonStyles.subtitle}>
+          <Text style={commonStyles.subtitle} role="note">
             Sedikit melihat pola dari jejakmu.
           </Text>
 
-          {/* HIGHLIGHT */}
           {mostVisited && (
             <View
+              role="region"
+              aria-label="Tempat Paling Sering Dikunjungi"
               style={{
                 backgroundColor: colors.primary,
                 borderRadius: 24,
@@ -67,6 +68,7 @@ export default function StatsScreen() {
               }}
             >
               <Text
+                role="note"
                 style={{
                   color: '#DDE1FF',
                   fontSize: 12,
@@ -77,6 +79,8 @@ export default function StatsScreen() {
               </Text>
 
               <Text
+                role="heading"
+                aria-level={2}
                 style={{
                   color: colors.white,
                   fontSize: 25,
@@ -88,6 +92,7 @@ export default function StatsScreen() {
               </Text>
 
               <Text
+                role="status"
                 style={{
                   color: '#E7E9FF',
                   marginTop: 5,
@@ -98,8 +103,7 @@ export default function StatsScreen() {
             </View>
           )}
 
-          {/* VISITS */}
-          <View style={commonStyles.section}>
+          <View style={commonStyles.section} role="region" aria-label="Tempat yang Sering Dikunjungi">
             <SectionTitle
               title="Tempat yang Sering Dikunjungi"
               subtitle="Berdasarkan mock data minggu ini"
@@ -137,6 +141,7 @@ export default function StatsScreen() {
                       </Text>
 
                       <Text
+                        role="status"
                         style={{
                           color: colors.primary,
                           fontWeight: '800',
@@ -147,6 +152,10 @@ export default function StatsScreen() {
                     </View>
 
                     <View
+                      role="progressbar"
+                      aria-valuenow={percentage}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
                       style={{
                         height: 9,
                         borderRadius: 10,
@@ -170,16 +179,20 @@ export default function StatsScreen() {
           </View>
 
           <View
+            role="region"
+            aria-label="Wawasan Jejak"
             style={[
               commonStyles.card,
               { marginTop: 20 },
             ]}
           >
-            <Text style={{ fontSize: 30 }}>
+            <Text role="img" aria-label="Kompas" style={{ fontSize: 30 }}>
               🧭
             </Text>
 
             <Text
+              role="heading"
+              aria-level={2}
               style={{
                 marginTop: 10,
                 fontSize: 17,
@@ -191,6 +204,7 @@ export default function StatsScreen() {
             </Text>
 
             <Text
+              role="note"
               style={{
                 marginTop: 5,
                 lineHeight: 21,
@@ -203,6 +217,8 @@ export default function StatsScreen() {
             </Text>
 
             <Pressable
+              role="button"
+              accessibilityLabel="Lihat timeline"
               onPress={() => router.push('/timeline')}
               style={({ pressed }) => [
                 commonStyles.button,

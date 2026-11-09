@@ -11,7 +11,6 @@ import BottomNav from '../components/BottomNav';
 import EmptyState from '../components/EmptyState';
 import SectionTitle from '../components/SectionTitle';
 import { activities } from '../data/activities';
-import { colors } from '../constants/colors';
 import { commonStyles } from '../styles/commonStyles';
 
 export default function TimelineScreen() {
@@ -27,16 +26,16 @@ export default function TimelineScreen() {
           commonStyles.scrollContent,
         ]}
         ListHeaderComponent={
-          <View>
-            <Text style={commonStyles.title}>
+          <View role="banner">
+            <Text style={commonStyles.title} role="heading" aria-level={1}>
               Timeline
             </Text>
 
-            <Text style={commonStyles.subtitle}>
+            <Text style={commonStyles.subtitle} role="note">
               Lihat kembali perjalananmu dari waktu ke waktu.
             </Text>
 
-            <View style={commonStyles.section}>
+            <View style={commonStyles.section} role="region" aria-label="Jejak Aktivitas">
               <SectionTitle
                 title="Jejak Aktivitas"
                 subtitle="5 Oktober 2026"
@@ -45,7 +44,7 @@ export default function TimelineScreen() {
           </View>
         }
         renderItem={({ item }) => (
-          <View>
+          <View role="article">
             <ActivityCard
               activity={item}
               onPress={() =>

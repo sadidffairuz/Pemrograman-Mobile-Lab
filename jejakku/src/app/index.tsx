@@ -2,6 +2,7 @@ import { Feather, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import BottomNav from '../components/BottomNav';
+import WeatherWidget from '../components/WeatherWidget';
 import { activities } from '../data/activities';
 import { colors } from '../constants/colors';
 
@@ -21,25 +22,36 @@ export default function HomeScreen() {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View style={styles.page}>
-          <View style={styles.topRow}>
+        <View style={styles.page} role="main">
+          <View style={styles.topRow} role="banner">
             <View style={styles.brandRow}>
-              <View style={styles.brandIcon}><Ionicons name="map" size={21} color={colors.white} /></View>
-              <Text style={styles.brand}>jejakku<Text style={styles.brandDot}>.</Text></Text>
+              <View style={styles.brandIcon} role="img" aria-label="Logo jejakku">
+                <Ionicons name="map" size={21} color={colors.white} />
+              </View>
+              <Text style={styles.brand} role="heading" aria-level={1}>
+                jejakku<Text style={styles.brandDot}>.</Text>
+              </Text>
             </View>
-            <Pressable accessibilityLabel="Buka profil" onPress={() => router.push('/profile')} style={styles.avatar}>
+            <Pressable
+              role="button"
+              accessibilityLabel="Buka profil"
+              onPress={() => router.push('/profile')}
+              style={styles.avatar}
+            >
               <Ionicons name="person-outline" size={21} color={colors.primary} />
             </Pressable>
           </View>
 
-          <View style={styles.greetingBlock}>
-            <Text style={styles.eyebrow}>RUANG KECIL UNTUK CERITAMU</Text>
-            <Text style={styles.heading}>{greeting()} 👋</Text>
-            <Text style={styles.subheading}>Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
+          <View style={styles.greetingBlock} role="region" aria-label="Salam pembuka">
+            <Text style={styles.eyebrow} role="note">RUANG KECIL UNTUK CERITAMU</Text>
+            <Text style={styles.heading} role="heading" aria-level={2}>{greeting()} 👋</Text>
+            <Text style={styles.subheading} role="note">Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
           </View>
 
-          <View style={styles.summaryCard}>
-            <View style={styles.summaryTop}>
+          <WeatherWidget />
+
+          <View style={styles.summaryCard} role="region" aria-label="Ringkasan Perjalanan">
+            <View style={styles.summaryTop} role="status">
               <View style={styles.liveDot} />
               <Text style={styles.summaryEyebrow}>RINGKASAN PERJALANAN</Text>
               <View style={{ flex: 1 }} />
@@ -56,21 +68,24 @@ export default function HomeScreen() {
                 <Text style={styles.summaryLabel}>cerita perjalanan</Text>
               </View>
             </View>
-            <Text style={styles.summaryFoot}>Koleksi tempat yang pernah kamu singgahi.</Text>
-            <View style={styles.summaryDecoration}><Ionicons name="navigate" size={54} color="rgba(255,255,255,0.08)" /></View>
+            <Text style={styles.summaryFoot} role="note">Koleksi tempat yang pernah kamu singgahi.</Text>
+            <View style={styles.summaryDecoration} role="img">
+              <Ionicons name="navigate" size={54} color="rgba(255,255,255,0.08)" />
+            </View>
           </View>
 
-          <View style={styles.sectionHeader}>
+          <View style={styles.sectionHeader} role="region" aria-label="Peta jejak header">
             <View>
-              <Text style={styles.sectionTitle}>Peta jejakmu</Text>
-              <Text style={styles.sectionSubtitle}>Tempat-tempat yang pernah kamu datangi</Text>
+              <Text style={styles.sectionTitle} role="heading" aria-level={2}>Peta jejakmu</Text>
+              <Text style={styles.sectionSubtitle} role="note">Tempat-tempat yang pernah kamu datangi</Text>
             </View>
-            <Pressable onPress={() => router.push('/search')} style={styles.textLink}>
-              <Text style={styles.textLinkLabel}>Jelajah</Text><Ionicons name="arrow-forward" size={15} color={colors.primary} />
+            <Pressable role="button" aria-label="Jelajah peta" onPress={() => router.push('/search')} style={styles.textLink}>
+              <Text style={styles.textLinkLabel}>Jelajah</Text>
+              <Ionicons name="arrow-forward" size={15} color={colors.primary} />
             </Pressable>
           </View>
 
-          <Pressable onPress={() => router.push('/search')} style={styles.mapCard}>
+          <Pressable role="button" aria-label="Buka peta perjalanan" onPress={() => router.push('/search')} style={styles.mapCard}>
             <View style={styles.mapBase}>
               <View style={[styles.road, styles.roadOne]} />
               <View style={[styles.road, styles.roadTwo]} />
@@ -78,48 +93,74 @@ export default function HomeScreen() {
               <View style={[styles.park, styles.parkOne]} />
               <View style={[styles.park, styles.parkTwo]} />
               <View style={styles.water} />
-              <View style={[styles.mapPin, { left: '27%', top: '30%' }]}><Ionicons name="location" size={19} color={colors.white} /></View>
-              <View style={[styles.mapPin, styles.mapPinAlt, { left: '62%', top: '51%' }]}><Ionicons name="location" size={18} color={colors.white} /></View>
-              <View style={styles.mapLabel}><Ionicons name="map-outline" size={14} color={colors.primary} /><Text style={styles.mapLabelText}>Peta perjalanan</Text></View>
-              <View style={styles.mapHint}><Text style={styles.mapHintText}>Lihat semua lokasi</Text><Feather name="arrow-up-right" size={15} color={colors.primary} /></View>
+              <View style={[styles.mapPin, { left: '27%', top: '30%' }]} role="img">
+                <Ionicons name="location" size={19} color={colors.white} />
+              </View>
+              <View style={[styles.mapPin, styles.mapPinAlt, { left: '62%', top: '51%' }]} role="img">
+                <Ionicons name="location" size={18} color={colors.white} />
+              </View>
+              <View style={styles.mapLabel} role="status">
+                <Ionicons name="map-outline" size={14} color={colors.primary} />
+                <Text style={styles.mapLabelText}>Peta perjalanan</Text>
+              </View>
+              <View style={styles.mapHint} role="note">
+                <Text style={styles.mapHintText}>Lihat semua lokasi</Text>
+                <Feather name="arrow-up-right" size={15} color={colors.primary} />
+              </View>
             </View>
           </Pressable>
 
-          <View style={styles.sectionHeader}>
+          <View style={styles.sectionHeader} role="region" aria-label="Jejak terbaru header">
             <View>
-              <Text style={styles.sectionTitle}>Jejak terbaru</Text>
-              <Text style={styles.sectionSubtitle}>Kenangan yang baru kamu catat</Text>
+              <Text style={styles.sectionTitle} role="heading" aria-level={2}>Jejak terbaru</Text>
+              <Text style={styles.sectionSubtitle} role="note">Kenangan yang baru kamu catat</Text>
             </View>
-            <Pressable onPress={() => router.push('/timeline')} style={styles.textLink}>
-              <Text style={styles.textLinkLabel}>Semua</Text><Ionicons name="arrow-forward" size={15} color={colors.primary} />
+            <Pressable role="button" aria-label="Lihat semua jejak" onPress={() => router.push('/timeline')} style={styles.textLink}>
+              <Text style={styles.textLinkLabel}>Semua</Text>
+              <Ionicons name="arrow-forward" size={15} color={colors.primary} />
             </Pressable>
           </View>
 
-          <View style={styles.activityList}>
+          <View style={styles.activityList} role="region" aria-label="Daftar jejak terbaru">
             {recentActivities.map((activity, index) => (
-              <Pressable key={activity.id} onPress={() => router.push(`/activity/${activity.id}`)} style={({ pressed }) => [styles.activityCard, pressed && { opacity: 0.75 }]}>
-                <View style={[styles.activityIcon, index === 1 && styles.activityIconSage, index === 2 && styles.activityIconPeach]}>
+              <Pressable
+                key={activity.id}
+                role="article"
+                aria-label={`Jejak di ${activity.place}`}
+                onPress={() => router.push(`/activity/${activity.id}`)}
+                style={({ pressed }) => [styles.activityCard, pressed && { opacity: 0.75 }]}
+              >
+                <View style={[styles.activityIcon, index === 1 && styles.activityIconSage, index === 2 && styles.activityIconPeach]} role="img">
                   <Text style={styles.activityEmoji}>{activity.icon}</Text>
                 </View>
                 <View style={styles.activityInfo}>
-                  <Text style={styles.activityName}>{activity.place}</Text>
-                  <Text style={styles.activityMeta}>{activity.category} · {activity.startTime}</Text>
+                  <Text style={styles.activityName} role="heading" aria-level={3}>{activity.place}</Text>
+                  <Text style={styles.activityMeta} role="note">{activity.category} · {activity.startTime}</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={19} color={colors.textLight} />
               </Pressable>
             ))}
-            {recentActivities.length === 0 && <Text style={styles.emptyText}>Belum ada jejak. Tambahkan tempat pertamamu!</Text>}
+            {recentActivities.length === 0 && (
+              <Text style={styles.emptyText} role="status">Belum ada jejak. Tambahkan tempat pertamamu!</Text>
+            )}
           </View>
 
-          <Pressable onPress={() => router.push('/search')} style={({ pressed }) => [styles.addButton, pressed && { opacity: 0.8 }]}>
-            <View style={styles.addIcon}><Ionicons name="add" size={23} color={colors.primary} /></View>
+          <Pressable
+            role="button"
+            aria-label="Simpan jejak baru"
+            onPress={() => router.push('/search')}
+            style={({ pressed }) => [styles.addButton, pressed && { opacity: 0.8 }]}
+          >
+            <View style={styles.addIcon} role="img">
+              <Ionicons name="add" size={23} color={colors.primary} />
+            </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.addTitle}>Simpan jejak baru</Text>
-              <Text style={styles.addSubtitle}>Catat tempat, foto, dan ceritamu</Text>
+              <Text style={styles.addTitle} role="heading" aria-level={3}>Simpan jejak baru</Text>
+              <Text style={styles.addSubtitle} role="note">Catat tempat, foto, dan ceritamu</Text>
             </View>
             <Feather name="arrow-up-right" size={20} color={colors.primary} />
           </Pressable>
-          <Text style={styles.footerNote}>Dibuat dari perjalananmu, disimpan untuk dikenang. ✦</Text>
+          <Text style={styles.footerNote} role="note">Dibuat dari perjalananmu, disimpan untuk dikenang. ✦</Text>
         </View>
       </ScrollView>
       <BottomNav />

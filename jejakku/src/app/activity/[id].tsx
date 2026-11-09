@@ -25,6 +25,7 @@ export default function ActivityDetailScreen() {
     return (
       <SafeAreaView style={commonStyles.screen}>
         <View
+          role="main"
           style={[
             commonStyles.container,
             {
@@ -48,8 +49,10 @@ export default function ActivityDetailScreen() {
         contentContainerStyle={commonStyles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <View style={commonStyles.container}>
+        <View style={commonStyles.container} role="main">
           <Pressable
+            role="button"
+            accessibilityLabel="Kembali"
             onPress={() => router.back()}
             style={{
               width: 45,
@@ -70,8 +73,10 @@ export default function ActivityDetailScreen() {
             />
           </Pressable>
 
-          <View style={{ alignItems: 'center' }}>
+          <View style={{ alignItems: 'center' }} role="region" aria-label="Informasi Tempat">
             <View
+              role="img"
+              aria-label={`Ikon ${activity.category}`}
               style={{
                 width: 85,
                 height: 85,
@@ -87,6 +92,8 @@ export default function ActivityDetailScreen() {
             </View>
 
             <Text
+              role="heading"
+              aria-level={1}
               style={{
                 marginTop: 18,
                 fontSize: 28,
@@ -98,6 +105,7 @@ export default function ActivityDetailScreen() {
             </Text>
 
             <Text
+              role="status"
               style={{
                 marginTop: 5,
                 color: colors.primary,
@@ -109,6 +117,8 @@ export default function ActivityDetailScreen() {
           </View>
 
           <View
+            role="region"
+            aria-label="Rincian Waktu"
             style={[
               commonStyles.card,
               commonStyles.shadow,
@@ -116,6 +126,7 @@ export default function ActivityDetailScreen() {
             ]}
           >
             <Text
+              role="note"
               style={{
                 fontSize: 13,
                 fontWeight: '700',
@@ -126,6 +137,8 @@ export default function ActivityDetailScreen() {
             </Text>
 
             <Text
+              role="heading"
+              aria-level={2}
               style={{
                 fontSize: 21,
                 fontWeight: '800',
@@ -145,6 +158,7 @@ export default function ActivityDetailScreen() {
             />
 
             <Text
+              role="note"
               style={{
                 fontSize: 13,
                 fontWeight: '700',
@@ -155,6 +169,7 @@ export default function ActivityDetailScreen() {
             </Text>
 
             <Text
+              role="status"
               style={{
                 fontSize: 20,
                 fontWeight: '800',
@@ -174,6 +189,7 @@ export default function ActivityDetailScreen() {
             />
 
             <Text
+              role="note"
               style={{
                 fontSize: 13,
                 fontWeight: '700',
@@ -184,6 +200,7 @@ export default function ActivityDetailScreen() {
             </Text>
 
             <Text
+              role="status"
               style={{
                 fontSize: 17,
                 fontWeight: '700',
@@ -196,12 +213,16 @@ export default function ActivityDetailScreen() {
           </View>
 
           <View
+            role="region"
+            aria-label="Catatan Perjalanan"
             style={[
               commonStyles.card,
               { marginTop: 15 },
             ]}
           >
             <Text
+              role="heading"
+              aria-level={2}
               style={{
                 fontSize: 16,
                 fontWeight: '800',
@@ -212,6 +233,7 @@ export default function ActivityDetailScreen() {
             </Text>
 
             <Text
+              role="article"
               style={{
                 marginTop: 8,
                 lineHeight: 22,

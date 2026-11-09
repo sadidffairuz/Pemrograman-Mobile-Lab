@@ -19,7 +19,7 @@ import { colors } from '../constants/colors';
 
 export default function SearchScreen() {
   const router = useRouter();
-  const [query, setQuery] = useState('');
+  const [search, setsearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
 
   const categories = useMemo(() => {
@@ -28,7 +28,7 @@ export default function SearchScreen() {
   }, []);
 
   const filteredActivities = useMemo(() => {
-    const trimmed = query.trim().toLowerCase();
+    const trimmed = search.trim().toLowerCase();
 
     return activities.filter((item) => {
       const matchCategory =
@@ -42,13 +42,14 @@ export default function SearchScreen() {
 
       return matchCategory && matchQuery;
     });
-  }, [query, selectedCategory]);
+  }, [search, selectedCategory]);
 
   return (
     <SafeAreaView style={styles.screen}>
-      <View style={styles.header}>
+      <View style={styles.header} role="banner">
         <View style={styles.topBar}>
           <Pressable
+            role="button"
             accessibilityLabel="Kembali"
             onPress={() => router.back()}
             style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
@@ -57,30 +58,35 @@ export default function SearchScreen() {
           </Pressable>
 
           <View style={styles.headerTexts}>
-            <Text style={styles.title}>Jelajah & Cari</Text>
-            <Text style={styles.subtitle}>Temukan jejak tempat dan catatan perjalanan</Text>
+            <Text style={styles.title} role="heading" aria-level={1}>Jelajah & Cari</Text>
+            <Text style={styles.subtitle} role="note">Temukan jejak tempat dan catatan perjalanan</Text>
           </View>
         </View>
 
-        <View style={styles.searchBar}>
+        <View style={styles.searchBar} role="searchbox">
           <Ionicons name="search" size={19} color={colors.primary} style={styles.searchIcon} />
           <TextInput
-            value={query}
-            onChangeText={setQuery}
+            value={search}
+            onChangeText={setsearch}
             placeholder="Cari tempat, catatan, atau kategori..."
             placeholderTextColor={colors.textLight}
             style={styles.input}
             returnKeyType="search"
             autoCapitalize="none"
           />
-          {query.length > 0 && (
-            <Pressable onPress={() => setQuery('')} style={styles.clearButton}>
+          {search.length > 0 && (
+            <Pressable
+              role="button"
+              accessibilityLabel="Hapus pencarian"
+              onPress={() => setsearch('')}
+              style={styles.clearButton}
+            >
               <Ionicons name="close-circle" size={18} color={colors.textLight} />
             </Pressable>
           )}
         </View>
 
-        <View style={styles.categoriesRow}>
+        <View style={styles.categoriesRow} role="tablist" aria-label="Kategori tempat">
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -91,6 +97,9 @@ export default function SearchScreen() {
               const active = item === selectedCategory;
               return (
                 <Pressable
+                  role="tab"
+                  accessibilityLabel={`Filter ${item}`}
+                  accessibilityState={{ selected: active }}
                   onPress={() => setSelectedCategory(item)}
                   style={[
                     styles.categoryChip,
@@ -118,7 +127,7 @@ export default function SearchScreen() {
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
-          <View style={styles.resultHeader}>
+          <View style={styles.resultHeader} role="status">
             <Text style={styles.resultCount}>
               {filteredActivities.length} jejak ditemukan
             </Text>
@@ -133,7 +142,7 @@ export default function SearchScreen() {
         ListEmptyComponent={
           <EmptyState
             title="Tidak Ditemukan"
-            message={`Tidak ada jejak yang cocok dengan kata kunci "${query}".`}
+            message={`Tidak ada jejak yang cocok dengan kata kunci "${search}".`}
           />
         }
       />

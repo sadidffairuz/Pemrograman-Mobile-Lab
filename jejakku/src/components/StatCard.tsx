@@ -13,10 +13,10 @@ export default function StatCard({
   label,
 }: StatCardProps) {
   return (
-    <View style={styles.card}>
-      <Text style={styles.icon}>{icon}</Text>
-      <Text style={styles.value}>{value}</Text>
-      <Text style={styles.label}>{label}</Text>
+    <View role="summary" aria-label={`Statistik ${label}`} style={styles.card}>
+      <Text role="img" aria-label={label} style={styles.icon}>{icon}</Text>
+      <Text role="status" style={styles.value}>{value}</Text>
+      <Text role="note" style={styles.label}>{label}</Text>
     </View>
   );
 }
@@ -41,11 +41,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '800',
     color: colors.text,
+    marginBottom: 4,
   },
 
   label: {
-    marginTop: 3,
-    fontSize: 11,
+    fontSize: 12,
     color: colors.textSecondary,
+    fontWeight: '600',
   },
 });

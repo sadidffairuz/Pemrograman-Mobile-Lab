@@ -11,10 +11,10 @@ export default function EmptyState({
   message,
 }: EmptyStateProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.icon}>🫧</Text>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.message}>{message}</Text>
+    <View role="status" aria-label="Status Kosong" style={styles.container}>
+      <Text role="img" aria-label="Ikon kosong" style={styles.icon}>🫧</Text>
+      <Text role="heading" aria-level={3} style={styles.title}>{title}</Text>
+      <Text role="note" style={styles.message}>{message}</Text>
     </View>
   );
 }

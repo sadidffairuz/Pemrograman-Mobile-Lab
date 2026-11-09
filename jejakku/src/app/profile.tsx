@@ -1,33 +1,36 @@
-import { StyleSheet, Text, View } from "react-native";
-import { Link } from "expo-router";
+import { StyleSheet, Text, View } from 'react-native';
+import { Link } from 'expo-router';
+import BottomNav from '../components/BottomNav';
+import { colors } from '../constants/colors';
 
-// test
-// test
-// test
 export default function Profile() {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Profile</Text>
-            <Link href="/" style={styles.link}>Back to Home</Link>
-        </View>
-    );
+  return (
+    <View style={styles.container} role="main">
+      <Text style={styles.title} role="heading" aria-level={1}>Profil</Text>
+      <Link href="/" style={styles.link} role="link" accessibilityLabel="Kembali ke Beranda">
+        Kembali ke Beranda
+      </Link>
+      <BottomNav />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#F7F8FC",
-    },
-    title: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 16,
-    },
-    link: {
-        color: "#5B6CFF",
-        fontSize: 16,
-        fontWeight: "600",
-    },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.background,
+  },
+  title: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 16,
+    color: colors.text,
+  },
+  link: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });

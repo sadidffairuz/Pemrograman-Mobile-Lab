@@ -11,11 +11,11 @@ export default function SectionTitle({
   subtitle,
 }: SectionTitleProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
+    <View role="region" style={styles.container}>
+      <Text role="heading" aria-level={2} style={styles.title}>{title}</Text>
 
       {subtitle ? (
-        <Text style={styles.subtitle}>{subtitle}</Text>
+        <Text role="note" style={styles.subtitle}>{subtitle}</Text>
       ) : null}
     </View>
   );
