@@ -29,8 +29,6 @@ export default function HomeScreen() {
       <Text style={styles.heading}>{greeting()} 👋</Text>
       <Text style={styles.subheading}>Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
 
-      <WeatherWidget />
-
       <View style={styles.summary}>
         <Text style={styles.summaryLabel}>RINGKASAN JEJAK</Text>
         <View style={styles.metrics}><View><Text style={styles.number}>{uniquePlaces}</Text><Text style={styles.metricLabel}>tempat tersimpan</Text></View><View style={styles.separator}/><View><Text style={styles.number}>{locations.length}</Text><Text style={styles.metricLabel}>catatan lokasi</Text></View></View>
