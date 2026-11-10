@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "FarahFairuz_085",
-    "slug": "FarahFairuz_085",
+    "name": "Jejakku",
+    "slug": "jejakku",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "farahfairuz085",
+    "scheme": "jejakku",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"
@@ -20,7 +20,7 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "static",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
@@ -32,7 +32,14 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Jejakku menggunakan lokasi untuk mencatat tempat yang kamu kunjungi dan merekam perjalanan saat aplikasi digunakan."
+        }
+      ],
+      "expo-sqlite"
     ],
     "experiments": {
       "typedRoutes": true,

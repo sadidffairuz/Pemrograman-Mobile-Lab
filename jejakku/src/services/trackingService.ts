@@ -1,0 +1,12 @@
+import type { Coordinates } from '../types/location';
+
+export function distanceInMeters(a: Coordinates, b: Coordinates): number {
+  const toRadians = (degrees: number) => degrees * Math.PI / 180;
+  const earthRadius = 6_371_000;
+  const dLat = toRadians(b.latitude - a.latitude);
+  const dLon = toRadians(b.longitude - a.longitude);
+  const lat1 = toRadians(a.latitude);
+  const lat2 = toRadians(b.latitude);
+  const value = Math.sin(dLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+  return 2 * earthRadius * Math.atan2(Math.sqrt(value), Math.sqrt(1 - value));
+}

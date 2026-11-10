@@ -1,241 +1,29 @@
-import { useRouter } from 'expo-router';
-import {
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
-
+import { useCallback, useState } from 'react';
+import { useFocusEffect, useRouter } from 'expo-router';
+import { Pressable, SafeAreaView, ScrollView, Text, View, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
-import SectionTitle from '../components/SectionTitle';
-import { activities } from '../data/activities';
 import { colors } from '../constants/colors';
-import { commonStyles } from '../styles/commonStyles';
-
-const getVisitCount = (place: string): number => {
-  return activities.filter(
-    (activity) => activity.place === place
-  ).length;
-};
-
-const getPlaces = (): string[] => {
-  return Array.from(
-    new Set(
-      activities.map((activity) => activity.place)
-    )
-  );
-};
+import { listLocations, listJourneys } from '../services/databaseService';
+import type { SavedLocation, Journey } from '../types/location';
 
 export default function StatsScreen() {
   const router = useRouter();
-
-  const places = getPlaces();
-
-  const placeStats = places
-    .map((place) => ({
-      place,
-      count: getVisitCount(place),
-    }))
-    .sort((a, b) => b.count - a.count);
-
-  const mostVisited = placeStats[0];
-
-  return (
-    <SafeAreaView style={commonStyles.screen}>
-      <ScrollView
-        contentContainerStyle={commonStyles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <View style={commonStyles.container} role="main">
-          <Text style={commonStyles.title} role="heading" aria-level={1}>
-            Statistik
-          </Text>
-
-          <Text style={commonStyles.subtitle} role="note">
-            Sedikit melihat pola dari jejakmu.
-          </Text>
-
-          {mostVisited && (
-            <View
-              role="region"
-              aria-label="Tempat Paling Sering Dikunjungi"
-              style={{
-                backgroundColor: colors.primary,
-                borderRadius: 24,
-                padding: 20,
-                marginTop: 25,
-              }}
-            >
-              <Text
-                role="note"
-                style={{
-                  color: '#DDE1FF',
-                  fontSize: 12,
-                  fontWeight: '800',
-                }}
-              >
-                TEMPAT PALING SERING
-              </Text>
-
-              <Text
-                role="heading"
-                aria-level={2}
-                style={{
-                  color: colors.white,
-                  fontSize: 25,
-                  fontWeight: '800',
-                  marginTop: 7,
-                }}
-              >
-                🏆 {mostVisited.place}
-              </Text>
-
-              <Text
-                role="status"
-                style={{
-                  color: '#E7E9FF',
-                  marginTop: 5,
-                }}
-              >
-                {mostVisited.count} kali tercatat
-              </Text>
-            </View>
-          )}
-
-          <View style={commonStyles.section} role="region" aria-label="Tempat yang Sering Dikunjungi">
-            <SectionTitle
-              title="Tempat yang Sering Dikunjungi"
-              subtitle="Berdasarkan mock data minggu ini"
-            />
-
-            <View style={commonStyles.card}>
-              {placeStats.map((item, index) => {
-                const percentage =
-                  (item.count / placeStats[0].count) * 100;
-
-                return (
-                  <View
-                    key={item.place}
-                    style={{
-                      marginBottom:
-                        index === placeStats.length - 1
-                          ? 0
-                          : 22,
-                    }}
-                  >
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        marginBottom: 8,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontWeight: '700',
-                          color: colors.text,
-                        }}
-                      >
-                        {index + 1}. {item.place}
-                      </Text>
-
-                      <Text
-                        role="status"
-                        style={{
-                          color: colors.primary,
-                          fontWeight: '800',
-                        }}
-                      >
-                        {item.count}x
-                      </Text>
-                    </View>
-
-                    <View
-                      role="progressbar"
-                      aria-valuenow={percentage}
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      style={{
-                        height: 9,
-                        borderRadius: 10,
-                        backgroundColor: '#EEF0F5',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      <View
-                        style={{
-                          width: `${percentage}%`,
-                          height: '100%',
-                          backgroundColor: colors.primary,
-                          borderRadius: 10,
-                        }}
-                      />
-                    </View>
-                  </View>
-                );
-              })}
-            </View>
-          </View>
-
-          <View
-            role="region"
-            aria-label="Wawasan Jejak"
-            style={[
-              commonStyles.card,
-              { marginTop: 20 },
-            ]}
-          >
-            <Text role="img" aria-label="Kompas" style={{ fontSize: 30 }}>
-              🧭
-            </Text>
-
-            <Text
-              role="heading"
-              aria-level={2}
-              style={{
-                marginTop: 10,
-                fontSize: 17,
-                fontWeight: '800',
-                color: colors.text,
-              }}
-            >
-              Jejakmu punya pola
-            </Text>
-
-            <Text
-              role="note"
-              style={{
-                marginTop: 5,
-                lineHeight: 21,
-                color: colors.textSecondary,
-              }}
-            >
-              Statistik ini masih menggunakan data lokal.
-              Nantinya dapat dikembangkan menjadi analisis
-              otomatis berdasarkan lokasi pengguna.
-            </Text>
-
-            <Pressable
-              role="button"
-              accessibilityLabel="Lihat timeline"
-              onPress={() => router.push('/timeline')}
-              style={({ pressed }) => [
-                commonStyles.button,
-                commonStyles.buttonPrimary,
-                { marginTop: 15 },
-                pressed && { opacity: 0.7 },
-              ]}
-            >
-              <Text style={commonStyles.buttonText}>
-                Lihat timeline
-              </Text>
-            </Pressable>
-          </View>
-        </View>
-      </ScrollView>
-
-      <BottomNav />
-    </SafeAreaView>
-  );
+  const [locations, setLocations] = useState<SavedLocation[]>([]);
+  const [journeys, setJourneys] = useState<Journey[]>([]);
+  useFocusEffect(useCallback(() => {
+    listLocations().then(setLocations).catch(() => setLocations([]));
+    listJourneys().then(setJourneys).catch(() => setJourneys([]));
+  }, []));
+  const counts = new Map<string, number>();
+  locations.forEach((item) => counts.set(item.placeName, (counts.get(item.placeName) ?? 0) + 1));
+  const places = [...counts.entries()].sort((a,b) => b[1]-a[1]);
+  return <SafeAreaView style={styles.screen}><ScrollView contentContainerStyle={styles.content}>
+    <Text style={styles.eyebrow}>RINGKASAN AKTIVITAS</Text><Text style={styles.title}>Statistik jejak</Text><Text style={styles.subtitle}>Ringkasan berdasarkan data yang tersimpan di perangkat.</Text>
+    <View style={styles.summary}><View style={styles.metric}><Text style={styles.number}>{locations.length}</Text><Text style={styles.metricLabel}>lokasi tercatat</Text></View><View style={styles.metric}><Text style={styles.number}>{journeys.length}</Text><Text style={styles.metricLabel}>sesi perjalanan</Text></View><View style={styles.metric}><Text style={styles.number}>{places.length}</Text><Text style={styles.metricLabel}>tempat berbeda</Text></View></View>
+    <Text style={styles.section}>Tempat yang sering dicatat</Text>
+    {places.length === 0 ? <View style={styles.empty}><Ionicons name="stats-chart-outline" size={32} color={colors.textLight}/><Text style={styles.emptyText}>Statistik akan muncul setelah kamu menyimpan jejak.</Text></View> : places.slice(0,8).map(([place,count],index)=><View key={place} style={styles.row}><View style={{flex:1}}><Text style={styles.place}>{index+1}. {place}</Text><View style={styles.barTrack}><View style={[styles.bar,{width:`${(count/places[0][1])*100}%`}]}/></View></View><Text style={styles.count}>{count}x</Text></View>)}
+    <Pressable style={styles.button} onPress={() => router.push('/timeline')}><Text style={styles.buttonText}>Lihat riwayat lokasi</Text></Pressable>
+  </ScrollView><BottomNav/></SafeAreaView>;
 }
+const styles=StyleSheet.create({screen:{flex:1,backgroundColor:colors.background},content:{padding:22,paddingBottom:120},eyebrow:{fontSize:10,fontWeight:'800',letterSpacing:1.5,color:colors.primary},title:{fontSize:28,fontWeight:'900',color:colors.text,marginTop:7},subtitle:{fontSize:13,lineHeight:19,color:colors.textSecondary,marginTop:7,marginBottom:20},summary:{flexDirection:'row',backgroundColor:colors.primary,borderRadius:20,padding:16,justifyContent:'space-between'},metric:{flex:1},number:{fontSize:27,fontWeight:'900',color:'#fff'},metricLabel:{fontSize:10,color:'#DDE8DA',marginTop:3},section:{fontSize:17,fontWeight:'900',color:colors.text,marginTop:25,marginBottom:13},row:{flexDirection:'row',alignItems:'center',gap:15,backgroundColor:colors.surface,borderRadius:15,padding:13,marginBottom:9},place:{fontSize:12,fontWeight:'800',color:colors.text},barTrack:{height:6,backgroundColor:'#E8EAE3',borderRadius:5,marginTop:8,overflow:'hidden'},bar:{height:6,backgroundColor:colors.success,borderRadius:5},count:{fontSize:12,fontWeight:'900',color:colors.primary},empty:{backgroundColor:colors.surface,borderRadius:17,padding:22,alignItems:'center'},emptyText:{fontSize:12,color:colors.textSecondary,textAlign:'center',marginTop:10},button:{backgroundColor:colors.primary,padding:14,borderRadius:14,alignItems:'center',marginTop:18},buttonText:{fontSize:13,color:'#fff',fontWeight:'800'}});

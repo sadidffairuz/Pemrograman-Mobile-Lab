@@ -1,10 +1,12 @@
-import { Feather, Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useFocusEffect, useRouter } from 'expo-router';
 import BottomNav from '../components/BottomNav';
 import WeatherWidget from '../components/WeatherWidget';
-import { activities } from '../data/activities';
 import { colors } from '../constants/colors';
+import { listLocations } from '../services/databaseService';
+import type { SavedLocation } from '../types/location';
 
 const greeting = () => {
   const hour = new Date().getHours();
@@ -16,217 +18,36 @@ const greeting = () => {
 
 export default function HomeScreen() {
   const router = useRouter();
-  const recentActivities = [...activities].slice(0, 3);
-  const totalPlaces = new Set(activities.map((item) => item.place)).size;
+  const [locations, setLocations] = useState<SavedLocation[]>([]);
+  useFocusEffect(useCallback(() => { listLocations().then(setLocations).catch(() => setLocations([])); }, []));
+  const uniquePlaces = new Set(locations.map((item) => item.placeName)).size;
 
-  return (
-    <SafeAreaView style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        <View style={styles.page} role="main">
-          <View style={styles.topRow} role="banner">
-            <View style={styles.brandRow}>
-              <View style={styles.brandIcon} role="img" aria-label="Logo jejakku">
-                <Ionicons name="map" size={21} color={colors.white} />
-              </View>
-              <Text style={styles.brand} role="heading" aria-level={1}>
-                jejakku<Text style={styles.brandDot}>.</Text>
-              </Text>
-            </View>
-            <Pressable
-              role="button"
-              accessibilityLabel="Buka profil"
-              onPress={() => router.push('/profile')}
-              style={styles.avatar}
-            >
-              <Ionicons name="person-outline" size={21} color={colors.primary} />
-            </Pressable>
-          </View>
+  return <SafeAreaView style={styles.screen}>
+    <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <View style={styles.top}><View style={styles.brandIcon}><Ionicons name="map" size={22} color="#fff"/></View><Text style={styles.brand}>jejakku<Text style={{color:colors.accent}}>.</Text></Text><Pressable style={styles.avatar} onPress={() => router.push('/profile')}><Ionicons name="person-outline" size={20} color={colors.primary}/></Pressable></View>
+      <Text style={styles.eyebrow}>RUANG KECIL UNTUK CERITAMU</Text>
+      <Text style={styles.heading}>{greeting()} 👋</Text>
+      <Text style={styles.subheading}>Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
 
-          <View style={styles.greetingBlock} role="region" aria-label="Salam pembuka">
-            <Text style={styles.eyebrow} role="note">RUANG KECIL UNTUK CERITAMU</Text>
-            <Text style={styles.heading} role="heading" aria-level={2}>{greeting()} 👋</Text>
-            <Text style={styles.subheading} role="note">Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
-          </View>
+      <WeatherWidget />
 
-          <WeatherWidget />
+      <View style={styles.summary}>
+        <Text style={styles.summaryLabel}>RINGKASAN JEJAK</Text>
+        <View style={styles.metrics}><View><Text style={styles.number}>{uniquePlaces}</Text><Text style={styles.metricLabel}>tempat tersimpan</Text></View><View style={styles.separator}/><View><Text style={styles.number}>{locations.length}</Text><Text style={styles.metricLabel}>catatan lokasi</Text></View></View>
+        <Text style={styles.summaryFoot}>Riwayat disimpan secara lokal di perangkat.</Text>
+      </View>
 
-          <View style={styles.summaryCard} role="region" aria-label="Ringkasan Perjalanan">
-            <View style={styles.summaryTop} role="status">
-              <View style={styles.liveDot} />
-              <Text style={styles.summaryEyebrow}>RINGKASAN PERJALANAN</Text>
-              <View style={{ flex: 1 }} />
-              <Ionicons name="sparkles-outline" size={20} color="#F5C59E" />
-            </View>
-            <View style={styles.summaryNumbers}>
-              <View style={styles.summaryMetric}>
-                <Text style={styles.summaryValue}>{totalPlaces}</Text>
-                <Text style={styles.summaryLabel}>tempat disimpan</Text>
-              </View>
-              <View style={styles.summaryDivider} />
-              <View style={styles.summaryMetric}>
-                <Text style={styles.summaryValue}>{activities.length}</Text>
-                <Text style={styles.summaryLabel}>cerita perjalanan</Text>
-              </View>
-            </View>
-            <Text style={styles.summaryFoot} role="note">Koleksi tempat yang pernah kamu singgahi.</Text>
-            <View style={styles.summaryDecoration} role="img">
-              <Ionicons name="navigate" size={54} color="rgba(255,255,255,0.08)" />
-            </View>
-          </View>
+      <Text style={styles.sectionTitle}>Mulai mencatat perjalanan</Text>
+      <Text style={styles.sectionSubtitle}>Pilih cara yang paling sesuai dengan aktivitasmu.</Text>
+      <Pressable style={styles.actionCard} onPress={() => router.push('/record')}><View style={styles.actionIcon}><Ionicons name="location" size={24} color={colors.primary}/></View><View style={{flex:1}}><Text style={styles.actionTitle}>Catat lokasi sekarang</Text><Text style={styles.actionDescription}>Ambil GPS, cari alamat, dan tambahkan cerita.</Text></View><Ionicons name="chevron-forward" size={20} color={colors.textLight}/></Pressable>
+      <Pressable style={styles.actionCard} onPress={() => router.push('/tracking')}><View style={[styles.actionIcon,{backgroundColor:'#F8E9DD'}]}><Ionicons name="navigate" size={24} color={colors.accent}/></View><View style={{flex:1}}><Text style={styles.actionTitle}>Mulai perjalanan otomatis</Text><Text style={styles.actionDescription}>Rekam titik perjalanan selama sesi aktif.</Text></View><Ionicons name="chevron-forward" size={20} color={colors.textLight}/></Pressable>
 
-          <View style={styles.sectionHeader} role="region" aria-label="Peta jejak header">
-            <View>
-              <Text style={styles.sectionTitle} role="heading" aria-level={2}>Peta jejakmu</Text>
-              <Text style={styles.sectionSubtitle} role="note">Tempat-tempat yang pernah kamu datangi</Text>
-            </View>
-            <Pressable role="button" aria-label="Jelajah peta" onPress={() => router.push('/search')} style={styles.textLink}>
-              <Text style={styles.textLinkLabel}>Jelajah</Text>
-              <Ionicons name="arrow-forward" size={15} color={colors.primary} />
-            </Pressable>
-          </View>
-
-          <Pressable role="button" aria-label="Buka peta perjalanan" onPress={() => router.push('/search')} style={styles.mapCard}>
-            <View style={styles.mapBase}>
-              <View style={[styles.road, styles.roadOne]} />
-              <View style={[styles.road, styles.roadTwo]} />
-              <View style={[styles.road, styles.roadThree]} />
-              <View style={[styles.park, styles.parkOne]} />
-              <View style={[styles.park, styles.parkTwo]} />
-              <View style={styles.water} />
-              <View style={[styles.mapPin, { left: '27%', top: '30%' }]} role="img">
-                <Ionicons name="location" size={19} color={colors.white} />
-              </View>
-              <View style={[styles.mapPin, styles.mapPinAlt, { left: '62%', top: '51%' }]} role="img">
-                <Ionicons name="location" size={18} color={colors.white} />
-              </View>
-              <View style={styles.mapLabel} role="status">
-                <Ionicons name="map-outline" size={14} color={colors.primary} />
-                <Text style={styles.mapLabelText}>Peta perjalanan</Text>
-              </View>
-              <View style={styles.mapHint} role="note">
-                <Text style={styles.mapHintText}>Lihat semua lokasi</Text>
-                <Feather name="arrow-up-right" size={15} color={colors.primary} />
-              </View>
-            </View>
-          </Pressable>
-
-          <View style={styles.sectionHeader} role="region" aria-label="Jejak terbaru header">
-            <View>
-              <Text style={styles.sectionTitle} role="heading" aria-level={2}>Jejak terbaru</Text>
-              <Text style={styles.sectionSubtitle} role="note">Kenangan yang baru kamu catat</Text>
-            </View>
-            <Pressable role="button" aria-label="Lihat semua jejak" onPress={() => router.push('/timeline')} style={styles.textLink}>
-              <Text style={styles.textLinkLabel}>Semua</Text>
-              <Ionicons name="arrow-forward" size={15} color={colors.primary} />
-            </Pressable>
-          </View>
-
-          <View style={styles.activityList} role="region" aria-label="Daftar jejak terbaru">
-            {recentActivities.map((activity, index) => (
-              <Pressable
-                key={activity.id}
-                role="article"
-                aria-label={`Jejak di ${activity.place}`}
-                onPress={() => router.push(`/activity/${activity.id}`)}
-                style={({ pressed }) => [styles.activityCard, pressed && { opacity: 0.75 }]}
-              >
-                <View style={[styles.activityIcon, index === 1 && styles.activityIconSage, index === 2 && styles.activityIconPeach]} role="img">
-                  <Text style={styles.activityEmoji}>{activity.icon}</Text>
-                </View>
-                <View style={styles.activityInfo}>
-                  <Text style={styles.activityName} role="heading" aria-level={3}>{activity.place}</Text>
-                  <Text style={styles.activityMeta} role="note">{activity.category} · {activity.startTime}</Text>
-                </View>
-                <Ionicons name="chevron-forward" size={19} color={colors.textLight} />
-              </Pressable>
-            ))}
-            {recentActivities.length === 0 && (
-              <Text style={styles.emptyText} role="status">Belum ada jejak. Tambahkan tempat pertamamu!</Text>
-            )}
-          </View>
-
-          <Pressable
-            role="button"
-            aria-label="Simpan jejak baru"
-            onPress={() => router.push('/search')}
-            style={({ pressed }) => [styles.addButton, pressed && { opacity: 0.8 }]}
-          >
-            <View style={styles.addIcon} role="img">
-              <Ionicons name="add" size={23} color={colors.primary} />
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.addTitle} role="heading" aria-level={3}>Simpan jejak baru</Text>
-              <Text style={styles.addSubtitle} role="note">Catat tempat, foto, dan ceritamu</Text>
-            </View>
-            <Feather name="arrow-up-right" size={20} color={colors.primary} />
-          </Pressable>
-          <Text style={styles.footerNote} role="note">Dibuat dari perjalananmu, disimpan untuk dikenang. ✦</Text>
-        </View>
-      </ScrollView>
-      <BottomNav />
-    </SafeAreaView>
-  );
+      <View style={styles.sectionHeader}><Text style={styles.sectionTitle}>Jejak terbaru</Text><Pressable onPress={() => router.push('/timeline')}><Text style={styles.link}>Lihat semua</Text></Pressable></View>
+      {locations.slice(0,3).map((item) => <View key={item.id} style={styles.recent}><View style={styles.recentIcon}><Ionicons name="pin" size={19} color={colors.primary}/></View><View style={{flex:1}}><Text style={styles.recentTitle}>{item.placeName}</Text><Text style={styles.recentMeta}>{item.area} · {item.source === 'manual' ? 'Manual' : 'Otomatis'}</Text></View></View>)}
+      {locations.length === 0 && <View style={styles.empty}><Ionicons name="footsteps-outline" size={30} color={colors.textLight}/><Text style={styles.emptyText}>Belum ada jejak. Mulai dengan mencatat lokasi pertamamu.</Text></View>}
+      <Text style={styles.attribution}>Reverse geocoding oleh © OpenStreetMap contributors.</Text>
+    </ScrollView>
+    <BottomNav/>
+  </SafeAreaView>;
 }
-
-const styles = StyleSheet.create({
-  screen: { flex: 1, backgroundColor: colors.background },
-  scroll: { paddingBottom: 112 },
-  page: { paddingHorizontal: 22, paddingTop: 12 },
-  topRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-  brandRow: { flexDirection: 'row', alignItems: 'center', gap: 9 },
-  brandIcon: { width: 37, height: 37, borderRadius: 13, backgroundColor: colors.primary, alignItems: 'center', justifyContent: 'center' },
-  brand: { color: colors.text, fontSize: 23, fontWeight: '900', letterSpacing: -0.8 },
-  brandDot: { color: colors.accent },
-  avatar: { width: 42, height: 42, borderRadius: 15, backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border, alignItems: 'center', justifyContent: 'center' },
-  greetingBlock: { marginTop: 27, marginBottom: 20 },
-  eyebrow: { color: colors.primary, fontSize: 10, letterSpacing: 1.5, fontWeight: '800', marginBottom: 7 },
-  heading: { fontSize: 29, color: colors.text, fontWeight: '800', letterSpacing: -0.8 },
-  subheading: { marginTop: 6, color: colors.textSecondary, fontSize: 13, lineHeight: 19 },
-  summaryCard: { backgroundColor: colors.primary, borderRadius: 25, padding: 20, overflow: 'hidden', marginBottom: 27 },
-  summaryTop: { flexDirection: 'row', alignItems: 'center', gap: 7 },
-  liveDot: { width: 7, height: 7, borderRadius: 4, backgroundColor: '#E9A16A' },
-  summaryEyebrow: { color: '#DDE8DA', fontSize: 10, fontWeight: '800', letterSpacing: 1.1 },
-  summaryNumbers: { flexDirection: 'row', alignItems: 'center', marginTop: 20, marginBottom: 16 },
-  summaryMetric: { flex: 1 },
-  summaryValue: { color: colors.white, fontSize: 34, fontWeight: '800', letterSpacing: -1 },
-  summaryLabel: { color: '#DDE8DA', fontSize: 11, marginTop: 2 },
-  summaryDivider: { width: 1, height: 45, backgroundColor: 'rgba(255,255,255,0.2)', marginHorizontal: 15 },
-  summaryFoot: { color: '#E8EEE5', fontSize: 11, marginTop: 2 },
-  summaryDecoration: { position: 'absolute', right: 9, bottom: -7, transform: [{ rotate: '-20deg' }] },
-  sectionHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 13 },
-  sectionTitle: { color: colors.text, fontSize: 18, fontWeight: '800', letterSpacing: -0.3 },
-  sectionSubtitle: { color: colors.textSecondary, fontSize: 11, marginTop: 4 },
-  textLink: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingVertical: 8, paddingLeft: 8 },
-  textLinkLabel: { color: colors.primary, fontSize: 12, fontWeight: '800' },
-  mapCard: { borderRadius: 22, overflow: 'hidden', marginBottom: 27, borderWidth: 1, borderColor: colors.border },
-  mapBase: { height: 176, backgroundColor: '#E8E9D9', overflow: 'hidden' },
-  road: { position: 'absolute', backgroundColor: '#FFFDF5', borderColor: '#DADCCB', borderWidth: 1, borderRadius: 50 },
-  roadOne: { width: '130%', height: 24, left: '-12%', top: '45%', transform: [{ rotate: '-18deg' }] },
-  roadTwo: { width: '110%', height: 17, left: '4%', top: '24%', transform: [{ rotate: '48deg' }] },
-  roadThree: { width: '100%', height: 14, left: '15%', top: '71%', transform: [{ rotate: '23deg' }] },
-  park: { position: 'absolute', backgroundColor: '#C6D6B7', borderRadius: 18 },
-  parkOne: { width: 92, height: 48, left: '4%', top: '8%', transform: [{ rotate: '-12deg' }] },
-  parkTwo: { width: 72, height: 52, right: '4%', bottom: '7%', transform: [{ rotate: '17deg' }] },
-  water: { position: 'absolute', width: 150, height: 20, backgroundColor: '#BDD9D2', borderRadius: 30, right: '-20%', top: '14%', transform: [{ rotate: '55deg' }] },
-  mapPin: { position: 'absolute', width: 33, height: 33, borderRadius: 17, backgroundColor: colors.primary, borderWidth: 3, borderColor: '#FFFEFA', alignItems: 'center', justifyContent: 'center', elevation: 3 },
-  mapPinAlt: { backgroundColor: colors.accent },
-  mapLabel: { position: 'absolute', left: 12, top: 12, flexDirection: 'row', gap: 6, alignItems: 'center', backgroundColor: 'rgba(255,254,250,0.93)', paddingHorizontal: 10, paddingVertical: 7, borderRadius: 11 },
-  mapLabelText: { color: colors.text, fontSize: 10, fontWeight: '800' },
-  mapHint: { position: 'absolute', right: 12, bottom: 12, flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: colors.surface, paddingHorizontal: 10, paddingVertical: 8, borderRadius: 11 },
-  mapHintText: { color: colors.primary, fontSize: 10, fontWeight: '800' },
-  activityList: { gap: 9, marginBottom: 18 },
-  activityCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.surface, borderRadius: 18, padding: 12, borderWidth: 1, borderColor: colors.border },
-  activityIcon: { width: 45, height: 45, borderRadius: 15, backgroundColor: '#F6E6D7', alignItems: 'center', justifyContent: 'center' },
-  activityIconSage: { backgroundColor: '#E1EADD' },
-  activityIconPeach: { backgroundColor: '#F5E4DA' },
-  activityEmoji: { fontSize: 21 },
-  activityInfo: { flex: 1, marginLeft: 12 },
-  activityName: { color: colors.text, fontSize: 13, fontWeight: '800' },
-  activityMeta: { color: colors.textSecondary, fontSize: 11, marginTop: 5 },
-  emptyText: { color: colors.textSecondary, paddingVertical: 16, fontSize: 13 },
-  addButton: { flexDirection: 'row', alignItems: 'center', gap: 12, backgroundColor: '#E7EDE2', borderWidth: 1, borderColor: '#D5E0D0', padding: 14, borderRadius: 19 },
-  addIcon: { width: 42, height: 42, borderRadius: 14, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center' },
-  addTitle: { color: colors.primary, fontWeight: '800', fontSize: 13 },
-  addSubtitle: { color: colors.textSecondary, fontSize: 10, marginTop: 4 },
-  footerNote: { textAlign: 'center', color: colors.textLight, fontSize: 10, marginTop: 23, marginBottom: 10 },
-});
+const styles=StyleSheet.create({screen:{flex:1,backgroundColor:colors.background},content:{paddingHorizontal:22,paddingTop:12,paddingBottom:120},top:{flexDirection:'row',alignItems:'center',gap:9,marginBottom:28},brandIcon:{width:38,height:38,borderRadius:13,backgroundColor:colors.primary,alignItems:'center',justifyContent:'center'},brand:{fontSize:23,fontWeight:'900',color:colors.text,flex:1},avatar:{width:40,height:40,borderRadius:14,backgroundColor:colors.surface,borderWidth:1,borderColor:colors.border,alignItems:'center',justifyContent:'center'},eyebrow:{fontSize:10,fontWeight:'800',letterSpacing:1.5,color:colors.primary},heading:{fontSize:29,fontWeight:'900',color:colors.text,marginTop:7},subheading:{fontSize:13,color:colors.textSecondary,marginTop:6,marginBottom:21},summary:{backgroundColor:colors.primary,borderRadius:23,padding:20,marginBottom:25},summaryLabel:{fontSize:10,fontWeight:'800',letterSpacing:1.2,color:'#DDE8DA'},metrics:{flexDirection:'row',alignItems:'center',marginTop:18,marginBottom:15},number:{fontSize:34,fontWeight:'900',color:'#fff'},metricLabel:{fontSize:11,color:'#DDE8DA',marginTop:2},separator:{width:1,height:42,backgroundColor:'rgba(255,255,255,0.25)',marginHorizontal:25},summaryFoot:{fontSize:10,color:'#E8EEE5'},sectionTitle:{fontSize:18,fontWeight:'900',color:colors.text},sectionSubtitle:{fontSize:11,color:colors.textSecondary,marginTop:4,marginBottom:12},actionCard:{backgroundColor:colors.surface,borderRadius:18,padding:14,borderWidth:1,borderColor:colors.border,flexDirection:'row',alignItems:'center',gap:12,marginBottom:10},actionIcon:{width:46,height:46,borderRadius:15,backgroundColor:'#E7EDE2',alignItems:'center',justifyContent:'center'},actionTitle:{fontSize:13,fontWeight:'800',color:colors.text},actionDescription:{fontSize:10,lineHeight:15,color:colors.textSecondary,marginTop:4},sectionHeader:{flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginTop:19,marginBottom:12},link:{fontSize:11,fontWeight:'800',color:colors.primary},recent:{flexDirection:'row',alignItems:'center',gap:11,backgroundColor:colors.surface,borderRadius:15,padding:12,marginBottom:8,borderWidth:1,borderColor:colors.border},recentIcon:{width:38,height:38,borderRadius:13,backgroundColor:'#E7EDE2',alignItems:'center',justifyContent:'center'},recentTitle:{fontSize:12,fontWeight:'800',color:colors.text},recentMeta:{fontSize:10,color:colors.textSecondary,marginTop:4},empty:{alignItems:'center',backgroundColor:colors.surface,borderRadius:17,padding:20},emptyText:{fontSize:11,color:colors.textSecondary,textAlign:'center',marginTop:9,lineHeight:17},attribution:{fontSize:9,color:colors.textLight,textAlign:'center',marginTop:22}});
