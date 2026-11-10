@@ -3,7 +3,6 @@ import { SafeAreaView, ScrollView, StyleSheet, Text, View, Pressable } from 'rea
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
 import BottomNav from '../components/BottomNav';
-import WeatherWidget from '../components/WeatherWidget';
 import { colors } from '../constants/colors';
 import { listLocations } from '../services/databaseService';
 import type { SavedLocation } from '../types/location';

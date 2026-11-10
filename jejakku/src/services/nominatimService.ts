@@ -28,6 +28,43 @@ function mapResponse(data: NominatimResponse, latitude: number, longitude: numbe
   };
 }
 
+export function fetchNominatimWithTimeout(
+  url: string,
+  timeoutMs = 7000
+): Promise<NominatimResponse> {
+  return new Promise<NominatimResponse>((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error('Koneksi timeout: Server OpenStreetMap Nominatim tidak merespons.'));
+    }, timeoutMs);
+
+    fetch(url, {
+      headers: {
+        Accept: 'application/json',
+        'Accept-Language': 'id',
+        'User-Agent': 'Jejakku/1.0 (academic mobile application)',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Nominatim gagal merespons (${response.status}). Coba lagi nanti.`);
+        }
+        return response.json() as Promise<NominatimResponse>;
+      })
+      .then((data) => {
+        clearTimeout(timer);
+        if (!data.display_name) {
+          reject(new Error('Alamat untuk koordinat ini tidak ditemukan oleh OpenStreetMap.'));
+          return;
+        }
+        resolve(data);
+      })
+      .catch((error) => {
+        clearTimeout(timer);
+        reject(error instanceof Error ? error : new Error('Gagal menghubungi server OpenStreetMap.'));
+      });
+  });
+}
+
 export function reverseGeocode(latitude: number, longitude: number): Promise<PlaceInfo> {
   const key = coordinateKey(latitude, longitude);
   const cached = addressCache.get(key);
@@ -42,16 +79,8 @@ export function reverseGeocode(latitude: number, longitude: number): Promise<Pla
 
     const url = `${NOMINATIM_URL}?format=jsonv2&addressdetails=1&lat=${encodeURIComponent(latitude)}&lon=${encodeURIComponent(longitude)}`;
     lastRequestAt = Date.now();
-    const response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'Accept-Language': 'id',
-        'User-Agent': 'Jejakku/1.0 (academic mobile application)',
-      },
-    });
-    if (!response.ok) throw new Error(`Nominatim gagal merespons (${response.status}). Coba lagi nanti.`);
-    const data = await response.json() as NominatimResponse;
-    if (!data.display_name) throw new Error('Alamat untuk koordinat ini tidak ditemukan oleh OpenStreetMap.');
+
+    const data = await fetchNominatimWithTimeout(url);
     const result = mapResponse(data, latitude, longitude);
     addressCache.set(key, result);
     return result;
