@@ -52,19 +52,31 @@ export default function SearchScreen() {
             role="button"
             accessibilityLabel="Kembali"
             onPress={() => router.back()}
-            style={({ pressed }) => [styles.backButton, pressed && { opacity: 0.7 }]}
+            style={({ pressed }) => [
+              styles.backButton,
+              pressed && { opacity: 0.7 },
+            ]}
           >
             <Ionicons name="arrow-back" size={20} color={colors.text} />
           </Pressable>
 
           <View style={styles.headerTexts}>
-            <Text style={styles.title} role="heading" aria-level={1}>Jelajah & Cari</Text>
-            <Text style={styles.subtitle} role="note">Temukan jejak tempat dan catatan perjalanan</Text>
+            <Text style={styles.title} role="heading" aria-level={1}>
+              Jelajah & Cari
+            </Text>
+            <Text style={styles.subtitle} role="note">
+              Temukan jejak tempat dan catatan perjalanan
+            </Text>
           </View>
         </View>
 
         <View style={styles.searchBar} role="searchbox">
-          <Ionicons name="search" size={19} color={colors.primary} style={styles.searchIcon} />
+          <Ionicons
+            name="search"
+            size={19}
+            color={colors.primary}
+            style={styles.searchIcon}
+          />
           <TextInput
             value={search}
             onChangeText={setsearch}
@@ -81,12 +93,20 @@ export default function SearchScreen() {
               onPress={() => setsearch('')}
               style={styles.clearButton}
             >
-              <Ionicons name="close-circle" size={18} color={colors.textLight} />
+              <Ionicons
+                name="close-circle"
+                size={18}
+                color={colors.textLight}
+              />
             </Pressable>
           )}
         </View>
 
-        <View style={styles.categoriesRow} role="tablist" aria-label="Kategori tempat">
+        <View
+          style={styles.categoriesRow}
+          role="tablist"
+          aria-label="Kategori tempat"
+        >
           <FlatList
             horizontal
             showsHorizontalScrollIndicator={false}

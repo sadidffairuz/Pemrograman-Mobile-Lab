@@ -6,8 +6,15 @@ import { colors } from '../constants/colors';
 export default function Profile() {
   return (
     <View style={styles.container} role="main">
-      <Text style={styles.title} role="heading" aria-level={1}>Profil</Text>
-      <Link href="/" style={styles.link} role="link" accessibilityLabel="Kembali ke Beranda">
+      <Text style={styles.title} role="heading" aria-level={1}>
+        Profil
+      </Text>
+      <Link
+        href="/"
+        style={styles.link}
+        role="link"
+        accessibilityLabel="Kembali ke Beranda"
+      >
         Kembali ke Beranda
       </Link>
       <BottomNav />

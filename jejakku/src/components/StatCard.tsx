@@ -7,16 +7,18 @@ interface StatCardProps {
   label: string;
 }
 
-export default function StatCard({
-  icon,
-  value,
-  label,
-}: StatCardProps) {
+export default function StatCard({ icon, value, label }: StatCardProps) {
   return (
     <View role="summary" aria-label={`Statistik ${label}`} style={styles.card}>
-      <Text role="img" aria-label={label} style={styles.icon}>{icon}</Text>
-      <Text role="status" style={styles.value}>{value}</Text>
-      <Text role="note" style={styles.label}>{label}</Text>
+      <Text role="img" aria-label={label} style={styles.icon}>
+        {icon}
+      </Text>
+      <Text role="status" style={styles.value}>
+        {value}
+      </Text>
+      <Text role="note" style={styles.label}>
+        {label}
+      </Text>
     </View>
   );
 }

@@ -14,9 +14,20 @@ function coordinateKey(latitude: number, longitude: number): string {
   return `${latitude.toFixed(4)},${longitude.toFixed(4)}`;
 }
 
-function mapResponse(data: NominatimResponse, latitude: number, longitude: number): PlaceInfo {
+function mapResponse(
+  data: NominatimResponse,
+  latitude: number,
+  longitude: number,
+): PlaceInfo {
   const address = data.address ?? {};
-  const area = address.city ?? address.town ?? address.village ?? address.suburb ?? address.county ?? address.state ?? 'Area tidak diketahui';
+  const area =
+    address.city ??
+    address.town ??
+    address.village ??
+    address.suburb ??
+    address.county ??
+    address.state ??
+    'Area tidak diketahui';
   const road = address.road;
   return {
     latitude,
@@ -30,11 +41,15 @@ function mapResponse(data: NominatimResponse, latitude: number, longitude: numbe
 
 export function fetchNominatimWithTimeout(
   url: string,
-  timeoutMs = 7000
+  timeoutMs = 7000,
 ): Promise<NominatimResponse> {
   return new Promise<NominatimResponse>((resolve, reject) => {
     const timer = setTimeout(() => {
-      reject(new Error('Koneksi timeout: Server OpenStreetMap Nominatim tidak merespons.'));
+      reject(
+        new Error(
+          'Koneksi timeout: Server OpenStreetMap Nominatim tidak merespons.',
+        ),
+      );
     }, timeoutMs);
 
     fetch(url, {
@@ -46,26 +61,39 @@ export function fetchNominatimWithTimeout(
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`Nominatim gagal merespons (${response.status}). Coba lagi nanti.`);
+          throw new Error(
+            `Nominatim gagal merespons (${response.status}). Coba lagi nanti.`,
+          );
         }
         return response.json() as Promise<NominatimResponse>;
       })
       .then((data) => {
         clearTimeout(timer);
         if (!data.display_name) {
-          reject(new Error('Alamat untuk koordinat ini tidak ditemukan oleh OpenStreetMap.'));
+          reject(
+            new Error(
+              'Alamat untuk koordinat ini tidak ditemukan oleh OpenStreetMap.',
+            ),
+          );
           return;
         }
         resolve(data);
       })
       .catch((error) => {
         clearTimeout(timer);
-        reject(error instanceof Error ? error : new Error('Gagal menghubungi server OpenStreetMap.'));
+        reject(
+          error instanceof Error
+            ? error
+            : new Error('Gagal menghubungi server OpenStreetMap.'),
+        );
       });
   });
 }
 
-export function reverseGeocode(latitude: number, longitude: number): Promise<PlaceInfo> {
+export function reverseGeocode(
+  latitude: number,
+  longitude: number,
+): Promise<PlaceInfo> {
   const key = coordinateKey(latitude, longitude);
   const cached = addressCache.get(key);
   if (cached) return Promise.resolve(cached);
@@ -86,6 +114,9 @@ export function reverseGeocode(latitude: number, longitude: number): Promise<Pla
     return result;
   });
 
-  requestQueue = request.then(() => undefined, () => undefined);
+  requestQueue = request.then(
+    () => undefined,
+    () => undefined,
+  );
   return request;
 }

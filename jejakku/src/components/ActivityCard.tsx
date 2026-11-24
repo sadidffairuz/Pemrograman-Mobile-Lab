@@ -1,10 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Activity } from '../types/activity';
 import { colors } from '../constants/colors';
@@ -14,28 +9,20 @@ interface ActivityCardProps {
   onPress: () => void;
 }
 
-export default function ActivityCard({
-  activity,
-  onPress,
-}: ActivityCardProps) {
+export default function ActivityCard({ activity, onPress }: ActivityCardProps) {
   return (
     <Pressable
       role="article"
       aria-label={`Aktivitas di ${activity.place}`}
       onPress={onPress}
-      style={({ pressed }) => [
-        styles.card,
-        pressed && styles.pressed,
-      ]}
+      style={({ pressed }) => [styles.card, pressed && styles.pressed]}
     >
       <View
         role="img"
         aria-label={`Ikon ${activity.category}`}
         style={styles.iconContainer}
       >
-        <Text style={styles.icon}>
-          {activity.icon}
-        </Text>
+        <Text style={styles.icon}>{activity.icon}</Text>
       </View>
 
       <View style={styles.content}>
@@ -63,11 +50,7 @@ export default function ActivityCard({
         </Text>
       </View>
 
-      <Ionicons
-        name="chevron-forward"
-        size={19}
-        color={colors.textLight}
-      />
+      <Ionicons name="chevron-forward" size={19} color={colors.textLight} />
     </Pressable>
   );
 }

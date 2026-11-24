@@ -6,15 +6,18 @@ interface EmptyStateProps {
   message: string;
 }
 
-export default function EmptyState({
-  title,
-  message,
-}: EmptyStateProps) {
+export default function EmptyState({ title, message }: EmptyStateProps) {
   return (
     <View role="status" aria-label="Status Kosong" style={styles.container}>
-      <Text role="img" aria-label="Ikon kosong" style={styles.icon}>🫧</Text>
-      <Text role="heading" aria-level={3} style={styles.title}>{title}</Text>
-      <Text role="note" style={styles.message}>{message}</Text>
+      <Text role="img" aria-label="Ikon kosong" style={styles.icon}>
+        🫧
+      </Text>
+      <Text role="heading" aria-level={3} style={styles.title}>
+        {title}
+      </Text>
+      <Text role="note" style={styles.message}>
+        {message}
+      </Text>
     </View>
   );
 }

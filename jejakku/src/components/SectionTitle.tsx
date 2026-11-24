@@ -6,16 +6,17 @@ interface SectionTitleProps {
   subtitle?: string;
 }
 
-export default function SectionTitle({
-  title,
-  subtitle,
-}: SectionTitleProps) {
+export default function SectionTitle({ title, subtitle }: SectionTitleProps) {
   return (
     <View role="region" style={styles.container}>
-      <Text role="heading" aria-level={2} style={styles.title}>{title}</Text>
+      <Text role="heading" aria-level={2} style={styles.title}>
+        {title}
+      </Text>
 
       {subtitle ? (
-        <Text role="note" style={styles.subtitle}>{subtitle}</Text>
+        <Text role="note" style={styles.subtitle}>
+          {subtitle}
+        </Text>
       ) : null}
     </View>
   );
