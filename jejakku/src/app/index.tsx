@@ -23,7 +23,7 @@ export default function HomeScreen() {
 
   return <SafeAreaView style={styles.screen}>
     <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
-      <View style={styles.top}><View style={styles.brandIcon}><Ionicons name="map" size={22} color="#fff"/></View><Text style={styles.brand}>jejakku<Text style={{color:colors.accent}}>.</Text></Text><Pressable style={styles.avatar} onPress={() => router.push('/profile')}><Ionicons name="person-outline" size={20} color={colors.primary}/></Pressable></View>
+      <View style={styles.top}><View style={styles.brandIcon}><Ionicons name="map" size={22} color="#fff"/></View><Text style={styles.brand}>jejakku<Text style={{color:colors.accent}}>.</Text></Text><Pressable style={styles.avatar} onPress={() => router.push('/users')}><Ionicons name="person-outline" size={20} color={colors.primary}/></Pressable></View>
       <Text style={styles.eyebrow}>RUANG KECIL UNTUK CERITAMU</Text>
       <Text style={styles.heading}>{greeting()} 👋</Text>
       <Text style={styles.subheading}>Setiap tempat punya cerita. Yuk, simpan jejakmu.</Text>
