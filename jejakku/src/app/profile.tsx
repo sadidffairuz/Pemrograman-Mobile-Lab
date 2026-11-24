@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import {
-  Alert,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -15,6 +14,7 @@ import { colors } from '../constants/colors';
 import { useAuth } from '../hooks/useAuth';
 import { listLocations } from '../services/databaseService';
 import { SavedLocation } from '../types/location';
+import { dialogService } from '../services/dialogService';
 
 export default function ProfileScreen() {
   const router = useRouter();
@@ -37,20 +37,13 @@ export default function ProfileScreen() {
   const initial = displayName.charAt(0).toUpperCase();
 
   const handleSignOut = () => {
-    Alert.alert(
+    dialogService.confirm(
       'Konfirmasi Keluar',
       'Apakah kamu yakin ingin keluar dari akun ini? Sesi akan dibersihkan dari penyimpanan aman perangkat.',
-      [
-        { text: 'Batal', style: 'cancel' },
-        {
-          text: 'Keluar',
-          style: 'destructive',
-          onPress: async () => {
-            await signOut();
-            router.replace('/login');
-          },
-        },
-      ],
+      async () => {
+        await signOut();
+        router.replace('/login');
+      },
     );
   };
 
@@ -106,7 +99,7 @@ export default function ProfileScreen() {
           <Pressable
             style={styles.menuItem}
             onPress={() =>
-              Alert.alert(
+              dialogService.alert(
                 'Keamanan Akun',
                 'Kata sandi dan token JWT disimpan secara terenkripsi menggunakan Expo SecureStore di level hardware OS.',
               )
@@ -127,38 +120,10 @@ export default function ProfileScreen() {
             />
           </Pressable>
 
-          <View style={styles.menuDivider} />
-
           <Pressable
             style={styles.menuItem}
             onPress={() =>
-              Alert.alert(
-                'Status Database',
-                `SQLite lokal terdeteksi aktif dengan ${locations.length} titik koordinat tersimpan di jejakku.db.`,
-              )
-            }
-          >
-            <View style={styles.menuIcon}>
-              <Ionicons
-                name="server-outline"
-                size={18}
-                color={colors.primary}
-              />
-            </View>
-            <Text style={styles.menuTitle}>Database SQLite Lokal</Text>
-            <Ionicons
-              name="chevron-forward"
-              size={16}
-              color={colors.textLight}
-            />
-          </Pressable>
-
-          <View style={styles.menuDivider} />
-
-          <Pressable
-            style={styles.menuItem}
-            onPress={() =>
-              Alert.alert(
+              dialogService.alert(
                 'Tentang Jejakku',
                 'Jejakku v1.4.0 — Aplikasi Jurnal Perjalanan Cerdas. Praktikum Pemrograman Mobile Modul 4.',
               )
@@ -187,8 +152,7 @@ export default function ProfileScreen() {
           ]}
           onPress={handleSignOut}
         >
-          <Ionicons name="log-out-outline" size={18} color={colors.danger} />
-          <Text style={styles.signOutText}>Keluar dari Akun</Text>
+          <Text style={styles.signOutText}>Sign Out</Text>
         </Pressable>
       </ScrollView>
 

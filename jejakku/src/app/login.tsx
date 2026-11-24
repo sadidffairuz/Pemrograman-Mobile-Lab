@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   ActivityIndicator,
-  Alert,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -19,6 +18,7 @@ import { colors } from '../constants/colors';
 import { AuthHeader } from '../components/auth/AuthHeader';
 import { AuthTabBar } from '../components/auth/AuthTabBar';
 import { SocialAuthButton } from '../components/auth/SocialAuthButton';
+import { dialogService } from '../services/dialogService';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -38,7 +38,7 @@ export default function LoginScreen() {
   const handleSubmit = async () => {
     const trimmedEmail = email.trim();
     if (!trimmedEmail || !password) {
-      Alert.alert(
+      dialogService.alert(
         'Perhatian',
         'Harap isi email dan kata sandi terlebih dahulu.',
       );
@@ -46,7 +46,7 @@ export default function LoginScreen() {
     }
 
     if (password.length < 6) {
-      Alert.alert(
+      dialogService.alert(
         'Kata Sandi Lemah',
         'Kata sandi minimal harus terdiri dari 6 karakter.',
       );
@@ -60,10 +60,10 @@ export default function LoginScreen() {
         name: name.trim() || undefined,
       });
       if (res.success) {
-        Alert.alert(
+        dialogService.alert(
           'Pendaftaran Berhasil',
           'Akunmu telah dibuat. Kamu sekarang dapat menjelajahi Jejakku.',
-          [{ text: 'Lanjut', onPress: () => router.replace('/') }],
+          () => router.replace('/'),
         );
       }
     } else {
@@ -78,7 +78,7 @@ export default function LoginScreen() {
   };
 
   const handleSocialAuth = () => {
-    Alert.alert(
+    dialogService.alert(
       'Login Google',
       'Integrasi Google OAuth menggunakan protokol WebBrowser Supabase siap dihubungkan.',
     );
