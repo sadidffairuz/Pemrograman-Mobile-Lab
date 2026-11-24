@@ -36,7 +36,7 @@ export default function ProfileScreen() {
     'Petualang Jejakku';
   const initial = displayName.charAt(0).toUpperCase();
 
-  const handleSignOut = () => {
+  const SignOut = () => {
     dialogService.confirm(
       'Konfirmasi Keluar',
       'Apakah kamu yakin ingin keluar dari akun ini? Sesi akan dibersihkan dari penyimpanan aman perangkat.',
@@ -101,7 +101,7 @@ export default function ProfileScreen() {
             onPress={() =>
               dialogService.alert(
                 'Keamanan Akun',
-                'Kata sandi dan token JWT disimpan secara terenkripsi menggunakan Expo SecureStore di level hardware OS.',
+                'akun kamu terlindungi'
               )
             }
           >
@@ -150,7 +150,7 @@ export default function ProfileScreen() {
             styles.signOutButton,
             pressed && { opacity: 0.8 },
           ]}
-          onPress={handleSignOut}
+          onPress={SignOut}
         >
           <Text style={styles.signOutText}>Sign Out</Text>
         </Pressable>
