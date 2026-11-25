@@ -142,6 +142,14 @@ export default function HomeScreen() {
           Reverse geocoding oleh © OpenStreetMap contributors.
         </Text>
       </ScrollView>
+
+      <Pressable
+        style={styles.notesButton}
+        //onPress={() => router.push('/notes')}
+      >
+        <Text style={styles.notesButtonText}>notes</Text>
+      </Pressable>
+
       <BottomNav />
     </SafeAreaView>
   );
@@ -149,6 +157,19 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { paddingHorizontal: 22, paddingTop: 12, paddingBottom: 120 },
+  notesButton: {
+    alignSelf: 'center',
+    backgroundColor: '#2E7D32',
+    paddingVertical: 6,
+    paddingHorizontal: 18,
+    borderRadius: 8,
+    marginBottom: 150,
+  },
+  notesButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '700',
+  },
   top: { flexDirection: 'row', alignItems: 'center', gap: 9, marginBottom: 28 },
   brandIcon: {
     width: 38,

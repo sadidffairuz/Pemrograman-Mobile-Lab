@@ -99,10 +99,7 @@ export default function ProfileScreen() {
           <Pressable
             style={styles.menuItem}
             onPress={() =>
-              dialogService.alert(
-                'Keamanan Akun',
-                'akun kamu terlindungi'
-              )
+              dialogService.alert('Keamanan Akun', 'akun kamu terlindungi')
             }
           >
             <View style={styles.menuIcon}>

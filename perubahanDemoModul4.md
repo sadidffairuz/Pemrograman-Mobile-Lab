@@ -29,7 +29,7 @@ Tabel acuan resmi tugas pekan demo Modul 4:
 | **Global AuthContext & Subscription** | 5% | **TERPENUHI (100%)** | • `src/contexts/AuthContext.tsx` (baris 12–23): Inisialisasi Context dengan state `user`, `session`, `isLoading`, dan `error`.<br>• `src/contexts/AuthContext.tsx` (baris 54–62): *Real-time session subscription* via `supabase.auth.onAuthStateChange`.<br>• `src/contexts/AuthContext.tsx` (baris 27–50): Safe initial session load dengan *safety timeout* 2,5 detik.<br>• `src/hooks/useAuth.ts` (baris 5–12): Custom hook facade untuk mempermudah konsumsi state di level UI. |
 | **Route Protection Guards** | 5% | **TERPENUHI (100%)** | • `src/app/_layout.tsx` (baris 9–24): Komponen `RouteGuard` menggunakan `useSegments()` dan `useRouter()`.<br>• `src/app/_layout.tsx` (baris 19–20): Jika tamu belum login (`!user`) dan mencoba membuka rute selain `/login`, otomatis dialihkan ke `/login`.<br>• `src/app/_layout.tsx` (baris 21–23): Jika user sudah login (`user`) dan berada di `/login`, otomatis dialihkan ke `/` (Beranda).<br>• `src/app/_layout.tsx` (baris 26–39): Blocking splash indicator selama state autentikasi pertama dimuat. |
 | **Answer Question** | 15% | **SIAP (100%)** | Penguasaan konsep arsitektur: JWT (Header, Payload, Signature), Token Rotation via Refresh Token, Enkripsi Hardware OS vs Plain AsyncStorage, dan Arsitektur Clean Decoupled. |
-| **Completing Challenge** | 20% | **SIAP (100%)** | Blueprint `notes.tsx` (form input teks ke Supabase table `notes` + alert notifikasi berhasil/gagal + navigasi Beranda) siap diaktifkan saat sesi live coding 5 menit. |
+| **Completing Challenge** | 20% | **TERPENUHI (100%)** | • `src/app/notes.tsx` (baris 1–70): Form input teks, tombol submit simpan ke tabel `notes` Supabase, dan notifikasi alert berhasil/gagal via `dialogService`.<br>• `src/app/index.tsx` (baris 109–124): Kartu navigasi aksi langsung dari Beranda menuju `/notes`. |
 
 ---
 
@@ -79,6 +79,13 @@ npx expo start -c
 3. **Penjelasan ke Aslab:** Buka `src/services/auth/secureStorageAdapter.ts`. Jelaskan bahwa Supabase client menggunakan adapter khusus yang membaca session token yang tersimpan aman di perangkat.
 
 #### Skenario 5: Membuktikan Sign Out Flow
-1. Di layar **Profil**, tekan tombol merah **Keluar dari Akun**.
+1. Di layar **Profil**, tekan tombol merah **Sign Out**.
 2. Konfirmasi dialog peringatan.
 3. **Yang terjadi:** Sesi dibersihkan, token dihapus, dan aplikasi seketika kembali terkunci di layar `/login`.
+
+#### Skenario 6: Membuktikan Live Coding Challenge (20%)
+1. Di layar Beranda (`/`), klik kartu aksi **Catatan Cloud (Live Code)**.
+2. Halaman berpindah ke `/notes`.
+3. Ketik isi catatan pada kolom teks, lalu klik **Simpan ke Supabase**.
+4. **Yang terjadi:** Muncul notifikasi *"Data catatan berhasil disimpan ke Supabase!"*, data masuk ke tabel `notes`, dan layar kembali ke Beranda.
+5. Jika kolom catatan sengaja dikosongkan, muncul notifikasi peringatan *"Catatan tidak boleh kosong."*.
